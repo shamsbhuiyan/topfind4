@@ -309,8 +309,8 @@ end
 class Cc < ActiveRecord::Base
   belongs_to :protein
   
-  scope :main, :conditions => "`topic` = 'CATALYTIC ACTIVITY' OR `topic` = 'DISEASE' OR `topic` = 'FUNCTION' OR `topic` = 'SUBCELLULAR LOCATION' = `topic` = 'TISSUE SPECIFICITY'"
-  scope :additional, :conditions => "`topic` != 'ALLERGEN' AND `topic` != 'ALTERNATIVE PRODUCTS' AND `topic` != 'BIOPHYSICOCHEMICAL PROPERTIES' AND `topic`!= 'BIOTECHNOLOGY' AND `topic` != 'DISEASE' AND `topic` != 'INTERACTION' AND `topic` != 'FUNCTION' AND `topic` != 'MASS SPECTROMETRY' AND `topic` != 'PHARMACEUTICAL' AND `topic` != 'RNA EDITING' AND `topic` != 'SUBCELLULAR LOCATION' AND `topic` != 'TISSUE SPECIFICITY' AND `topic` != 'WEB RESOURCE'"
+  scope :main,->{ where(:conditions => "`topic` = 'CATALYTIC ACTIVITY' OR `topic` = 'DISEASE' OR `topic` = 'FUNCTION' OR `topic` = 'SUBCELLULAR LOCATION' = `topic` = 'TISSUE SPECIFICITY'") }
+  scope :additional, ->{ where(:conditions => "`topic` != 'ALLERGEN' AND `topic` != 'ALTERNATIVE PRODUCTS' AND `topic` != 'BIOPHYSICOCHEMICAL PROPERTIES' AND `topic`!= 'BIOTECHNOLOGY' AND `topic` != 'DISEASE' AND `topic` != 'INTERACTION' AND `topic` != 'FUNCTION' AND `topic` != 'MASS SPECTROMETRY' AND `topic` != 'PHARMACEUTICAL' AND `topic` != 'RNA EDITING' AND `topic` != 'SUBCELLULAR LOCATION' AND `topic` != 'TISSUE SPECIFICITY' AND `topic` != 'WEB RESOURCE'") }
 end
 
 class Dr < ActiveRecord::Base
@@ -351,37 +351,37 @@ class Ft < ActiveRecord::Base
   belongs_to :protein
   has_many :chains, :through => :protein
   
-  named_scope :present, lambda { |from,to|
+  scope :present, lambda { |from,to|
     {:conditions => ['`from` >= ? AND `to` <= ?',from,to] }
   }
   
-  named_scope :absent, lambda { |from,to|
+  scope :absent, lambda { |from,to|
     {:conditions => ['(`to` < ? ) OR ( `from` > ?)',from,to] }
   }
   
-  named_scope :before, lambda { |pos|
+  scope :before, lambda { |pos|
     {:conditions => ['(`to` <= ? )' ,pos] }
   }
   
-  named_scope :after, lambda { |pos|
+  scope :after, lambda { |pos|
     {:conditions => ['( `from` > ?)',pos] }
   }    
   
   # domains that are fully in this chunk
-  named_scope :spanning, lambda { |from,to|
+  scope :spanning, lambda { |from,to|
     {:conditions => ['(`from` <= ? ) AND ( `to` >= ?)',from,to] }
   }
   
   # features that start or end at this position
-  named_scope :matching, lambda { |pos|
+  scope :matching, lambda { |pos|
     {:conditions => ['(`from` = ? ) OR ( `to` = ?)',pos,pos-1] }
   }
   
-  named_scope :matchfrom, lambda { |pos|
+  scope :matchfrom, lambda { |pos|
     {:conditions => ['(`from` = ? )', pos] }
   }
   
-  named_scope :matchto, lambda { |pos|
+  scope :matchto, lambda { |pos|
     {:conditions => ['(`to` = ? )', pos] }
   }  
   

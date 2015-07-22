@@ -57,7 +57,7 @@ class ProteinTest < ActiveSupport::TestCase
      found_protein = Protein.find(1)
      puts found_protein.active_features.to_s
      puts "[#{found_protein.domains}]"
-     assert found_protein.domains.to_s == "SIGNAL", "this is the wrong domain"
+     assert found_protein.domains.name.to_s == "SIGNAL", "this is the wrong domain #{found_protein.domains.to_s}"
      assert found_protein.active_features.to_s == "ACT_SITE", "this is the wrong active feature"
      assert found_protein.var_features.to_s == "CONFLICT", "this is the wrong var feature"
      assert found_protein.mod_features.to_s == "LIPID", "this is the wrong mod feature"
