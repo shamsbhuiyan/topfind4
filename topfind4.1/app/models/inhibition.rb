@@ -26,4 +26,10 @@ class Inhibition < ActiveRecord::Base
 
   
   belongs_to :import
+    def name 
+    name = inhibitor.name+' --| '+inhibited_protease.name if inhibitor
+    # name = inhibitory_molecule.name+' --| '+inhibited_protease.name if inhibitory_molecule
+    
+    name
+  end
 end

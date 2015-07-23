@@ -4,8 +4,27 @@
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
-one: {}
-# column: value
-#
-two: {}
-#  column: value
+one: 
+  id: 1
+  created_at: 2014-08-09 20:42:00
+  updated_at: 2014-08-09 20:42:05
+  inhibitor_id: 145
+  molecule_id: 1
+  inhibitory_molecule_id: 1
+  inhibited_proteaseisoform_id: 1
+  inhibited_proteasechain_id: 2
+  inhibited_protease_id: 2
+  idstring: P(Q9BYF1)-S(P01019)at(40)
+  import_id: 1
+two:
+  id: 2
+  created_at: 2014-08-02 20:42:00
+  updated_at: 2014-08-02 20:42:05
+  inhibitor_id: 145
+  molecule_id: 2
+  inhibitory_molecule_id: 2
+  inhibited_proteaseisoform_id: 2
+  inhibited_proteasechain_id: 1
+  inhibited_protease_id: 1
+  idstring: I(I04.003)-P(S01.017)
+  import_id: 2
