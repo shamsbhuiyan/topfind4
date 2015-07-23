@@ -1,0 +1,32 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+# This model initially had no columns defined.  If you add columns to the
+# model remove the '{}' from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#
+one:
+  id: 1
+  name: 14-3-3 protein beta/alpha.
+  description: NULL
+  created_at: 2011-03-20 20:07:51
+  updated_at: 2011-03-20 20:07:51
+  protein_id: 1
+  cterm_id: 1
+  nterm_id: 1
+  isoform_id: 1
+  idstring: P31946_1-246
+  from: 1
+  to: 246
+two: 
+  id: 2
+  name: 14-3-3 protein beta/alpha, other stuff
+  description: NULL
+  created_at: 2011-03-20 20:07:51
+  updated_at: 2011-03-20 20:07:51
+  protein_id: 2
+  cterm_id: 2
+  nterm_id: 2
+  isoform_id: 2
+  idstring: P31946_1-246
+  from: 2
+  to: 246
