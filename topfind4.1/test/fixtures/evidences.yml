@@ -1,0 +1,56 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+# This model initially had no columns defined.  If you add columns to the
+# model remove the '{}' from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#
+one: 
+  id: 1
+  name: inferred from uniprot
+  method: electronic annotation
+  protease_inhibitors_used: NULL
+  description: Extracted from uniprotKB database
+  phys_relevance: unknown
+  created_at: 2011-03-20 20:07:51
+  updated_at: 2011-03-20 20:07:51
+  evidencefile_file_name: some name
+  evidencefile_content_type: some type
+  evidencefile_file_size: 23
+  evidencefile_updated_at: 2011-03-20 20:07:51
+  owner_id: 1
+  idstring: 011-03-20 20:07:51
+  repository: NULL
+  lab: Overall
+  evidencesource_id: 1
+  confidence: 0
+  confidence_type: unknown
+  method_system: unknown
+  method_perturbation: none
+  method_protease_source: none
+  methodology: electronic annotation
+  proteaseassignment_confidence: unknown
+two:
+  id: 2
+  name: inferred from uniprot (by similarity)
+  method: electronic annotation maybe
+  protease_inhibitors_used: NULL
+  description: Extracted from uniprotKB database
+  phys_relevance: unknown
+  created_at: 2011-03-20 20:07:51
+  updated_at: 2011-03-20 20:07:51
+  evidencefile_file_name: some name
+  evidencefile_content_type: some type
+  evidencefile_file_size: 230
+  evidencefile_updated_at: 2011-03-20 20:07:51
+  owner_id: 2
+  idstring: 011-03-20 20:07:51
+  repository: NULL
+  lab: Overall
+  evidencesource_id: 2
+  confidence: 0
+  confidence_type: unknown
+  method_system: unknown
+  method_perturbation: none
+  method_protease_source: none
+  methodology: electronic annotation
+  proteaseassignment_confidence: unknown

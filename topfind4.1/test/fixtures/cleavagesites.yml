@@ -1,0 +1,64 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+# This model initially had no columns defined.  If you add columns to the
+# model remove the '{}' from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#
+one:
+   id: 1
+   p10: A
+   p9: C
+   p8: D
+   p9: E
+   p7: F
+   p6: G
+   p5: H
+   p4: I
+   p3: J
+   p2: K
+   p1: L
+   p10p: A
+   p9p: C
+   p8p: D
+   p9p: E
+   p7p: F
+   p6p: G
+   p5p: H
+   p4p: I
+   p3p: J
+   p2p: K
+   p1p: L
+   created_at: 2014-07-31 23:51:30
+   updated_at: 2014-08-01 15:24:59   
+   import_id: NULL
+   idstring: AAGDRVYIHP-FHLVIHNESTC
+   
+   
+two:
+   id: 2
+   p10: Q
+   p9: F
+   p8: K
+   p9: K
+   p7: K
+   p6: E
+   p5: H
+   p4: I
+   p3: J
+   p2: K
+   p1: L
+   p10p: A
+   p9p: C
+   p8p: Y
+   p9p: E
+   p7p: F
+   p6p: G
+   p5p: Q
+   p4p: I
+   p3p: J
+   p2p: K
+   p1p: L
+   created_at: 2014-08-09 20:42:05
+   updated_at: 2014-08-09 20:42:05 
+   import_id: NULL
+   idstring: AAGDRVYIHP-FHLVIHNESTC

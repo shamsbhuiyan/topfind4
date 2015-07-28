@@ -1,0 +1,29 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+# This model initially had no columns defined.  If you add columns to the
+# model remove the '{}' from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#
+one: 
+  id: 1
+  pmid: 1259062
+  title: Some random title
+  authors: A whole list of authors, commas
+  abstract: This is random. Who puts an abstract here.
+  ref:  J Biol Chem. 2002 Apr 26;277(17):14838-43. Epub 2002 Jan 28.
+  doi: 10.1074/jbc.M200581200
+  url: http://potatos.com
+  created_at: 2014-07-31 23:51:30
+  updated_at: 2014-08-01 15:24:59
+
+two: 
+  id: 2
+  pmid: 1259063
+  title: Another random title
+  authors: Another whole list of authors, commas
+  abstract: This is kind of random. Who puts an abstract here.
+  ref:  J Biol Chem. 2002 Apr 26;277(17):14838-43. Epub 2002 Jan 28.
+  doi: 10.1074/jbc.M200581200
+  url: http://potatos.com/yourmom
+  created_at: 2014-07-31 23:51:30
+  updated_at: 2014-08-01 15:24:59
