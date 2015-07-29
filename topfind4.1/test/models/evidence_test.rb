@@ -16,6 +16,6 @@ class EvidenceTest < ActiveSupport::TestCase
   end
   def test_fasterCSV
     found = Evidence.find(1)
-    Evidence.generate_csv([1,2,3])
+    Evidence.generate_csv([1,2])
   end
 end

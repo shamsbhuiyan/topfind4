@@ -81,7 +81,7 @@ class Evidence < ActiveRecord::Base
       csv << ['topfind evidence id','name','method','description','lab','repository','physiological relevance','directness of detection','confidence','tissues','publications (PubMed id)','evidencecode names','evidencecodes']
       ids.each do |id|
         e = Evidence.find(id)       
-        csv << [e.externalid,e.name,e.method,e.description,e.lab,e.repository,e.phys_relevance,e.directness,"#{e.confidence.to_s} #{e.confidence_type}",e.publications.*.pmid.join(':'),e.evidencecodes.*.name.join(':'),e.evidencecodes.*.code.join(':')]
+        csv << [e.externalid,e.name,e.method,e.description,e.lab,e.repository,e.phys_relevance,e.directness,"#{e.confidence.to_s} #{e.confidence_type}",e.publications.*.pmid.join(':')]#,e.evidencecodes.*.name.join(':'),e.evidencecodes.*.code.join(':')]
       end
     end  
   end 

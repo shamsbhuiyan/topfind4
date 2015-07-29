@@ -1,0 +1,50 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+# This model initially had no columns defined.  If you add columns to the
+# model remove the '{}' from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#
+one: 
+  id: 1
+  name: mahrus-well-jukart-nterm
+  description: Nik made me do it
+  inhibitions_listed: 0
+  inhibitions_imported: 0
+  cleavages_listed: 0
+  cleavages_imported: 0
+  created_at: 2011-03-20 20:07:51
+  updated_at: 2011-03-20 20:07:51
+  csvfile_file_name: wildes-wells-blood-serum-nterm.csv
+  csvfile_content_type: text/csv
+  csvfile_file_size: 10124
+  csvfile_updated_at: 2014-09-10 21:55:48
+  cterms_listed: 0
+  cterms_imported: 0
+  nterms_listed: 1078
+  owner_id: 1
+  evidence_id: 146747
+  datatype: N-termini
+  cleavagesites_listed: 0
+  cleavagesites_imported: 0
+two: 
+  id: 2
+  name: mahrus-well-jukart-nterm
+  description: Nik made me do it
+  inhibitions_listed: 0
+  inhibitions_imported: 0
+  cleavages_listed: 0
+  cleavages_imported: 0
+  created_at: 2011-03-20 20:07:51
+  updated_at: 2011-03-20 20:07:51
+  csvfile_file_name: wildes-wells-blood-serum-nterm.csv
+  csvfile_content_type: text/csv
+  csvfile_file_size: 10124
+  csvfile_updated_at: 2014-09-10 21:55:48
+  cterms_listed: 0
+  cterms_imported: 0
+  nterms_listed: 1078
+  owner_id: 1
+  evidence_id: 146747
+  datatype: N-termini
+  cleavagesites_listed: 0
+  cleavagesites_imported: 0
