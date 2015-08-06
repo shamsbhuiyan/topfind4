@@ -40,4 +40,9 @@ test "the truth" do
     puts "[#{found.map_to_isoforms}]"
     assert !found.targeted_boundaries.nil?, "wrong boundaries yo"
   end
+  
+  def test_fasterCSV
+    found = Cterm.find(1)
+    Cterm.generate_csv([1,2])
+  end
 end

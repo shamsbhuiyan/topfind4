@@ -86,5 +86,13 @@ class Cterm < ActiveRecord::Base
 		matchprot.cterms << cterm unless matchprot.cterms.include?(cterm)
 	  end
   end
-
+ def self.generate_csv(ids)
+    CSV.generate({:col_sep => "\t"}) do |csv|
+      csv << ['topcat terminus id','position','sequence','protein (uniprot ac)','topcat evidence ids']
+      ids.each do |id|
+        c = Cterm.find(id)       
+        csv << [c.externalid,c.pos,c.protein.sequence[c.pos-10..c.pos-1],c.protein.ac,c.evidences.collect{|e| e.externalid}.join(':')]
+      end
+    end  
+  end
 end
