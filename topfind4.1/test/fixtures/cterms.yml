@@ -4,29 +4,26 @@
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
-one: 
+one:
   id: 1
-  name: unknown
-  description: NULL
+  protein_id: 1
+  pos: 1
   created_at: 2014-07-31 23:51:30
   updated_at: 2014-08-01 15:24:59
-  nterm: 1
-  cterm: 1
-  subcell: NULL
-  psimodid: NULL
-  display: NULL
-  kw_id: 1
-  ac: NULL
-two: 
+  import_id: 1
+  idstring: P31946-246-unknown
+  isoform_id: 1
+  terminusmodification_id: 1
+  seqexcerpt: NULL
+  
+two:
   id: 2
-  name: Batman
-  description: I am the night
+  protein_id: 2
+  pos: 246
   created_at: 2014-07-31 23:51:30
   updated_at: 2014-08-01 15:24:59
-  nterm: 2
-  cterm: 2
-  subcell: NULL
-  psimodid: NULL
-  display: NULL
-  kw_id: 2
-  ac: NULL
+  import_id: 2
+  idstring: P31946-246-unknown
+  isoform_id: 2
+  terminusmodification_id: 2
+  seqexcerpt: NULL
