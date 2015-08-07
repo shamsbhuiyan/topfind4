@@ -1,0 +1,29 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+# This model initially had no columns defined.  If you add columns to the
+# model remove the '{}' from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#
+one:
+  id: 1
+  protein_id: 1
+  pos: 1
+  created_at: 2014-07-31 23:51:31
+  updated_at: 2014-07-31 23:51:31
+  import_id: 1
+  idstring: P31946-1-Acetylation
+  isoform_id: NULL
+  terminusmodification_id: 1
+  seqexcerpt: NULL
+
+two: 
+  id: 2
+  protein_id: 2
+  pos: 2
+  created_at: 2014-07-31 23:51:31
+  updated_at: 2014-07-31 23:51:31
+  import_id: 2
+  idstring: P31946-2-Acetylation
+  isoform_id: NULL
+  terminusmodification_id: 2
+  seqexcerpt: NULL
