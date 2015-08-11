@@ -53,4 +53,21 @@ Rails.application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
+=begin
+  map.connect 'documentation', :controller => 'documentations', :action => 'index'
+  map.connect 'documentations/admin', :controller => 'documentations', :action => 'admin'
+  map.connect 'license', :controller => 'documentations', :action => 'license'
+  map.connect  'about', :controller => 'documentations', :action => 'about'  
+  map.connect  'download', :controller => 'documentations', :action => 'download' 
+  map.connect  'api', :controller => 'documentations', :action => 'api'
+=end
+  get 'documentations/license'
+  get 'documentations/about'
+  get 'documentations/download'
+  get 'documentations/api'
+  get 'documentations/index'
+  
+  #get 'documentation' => 'documentations#index'
+  #get 'license' => 'documentations#license'
+
 end

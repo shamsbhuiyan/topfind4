@@ -1,0 +1,82 @@
+digraph G {
+CTSE [style=filled fillcolor=turquoise];
+KNG1 [style=filled fillcolor=grey];
+AGT [style=filled fillcolor=grey];
+NTS [style=filled fillcolor=grey];
+GZMB [style=filled fillcolor=grey];
+CTSS [style=filled fillcolor=grey];
+CTSH [style=filled fillcolor=grey];
+F2 [style=filled fillcolor=grey];
+CAPN2 [style=filled fillcolor=grey];
+edge [style=bold  color=grey labelfontname=Arial];
+      subgraph cluster_1 {
+      		label = Legend;
+      		color=black;
+      		"query protease" [style=filled fillcolor=turquoise];		
+      		"list member " [style=filled fillcolor=grey];
+      		inhibitor -> protease [label="inhibition (inh)", arrowhead = tee];
+      		protease -> substrate [label="cleavage (position indicated)"];
+      }
+CTSE -> A2M[label=834 style=bold];
+A2M -> CTSH[label=inh, arrowhead = tee]
+CTSH -> KNG1[label=385 style=bold];
+A2M -> CAPN1[label=inh, arrowhead = tee]
+CAPN1 -> KNG1[label=389 style=bold];
+A2M -> MMP8[label=inh, arrowhead = tee]
+MMP8 -> KNG1[label=387 style=bold];
+MMP8 -> KNG1[label=388 style=bold];
+A2M -> CMA1[label=inh, arrowhead = tee]
+CMA1 -> KNG1[label=388 style=bold];
+A2M -> KLKB1[label=inh, arrowhead = tee]
+KLKB1 -> KNG1[label=389 style=bold];
+CTSE -> APP[label=690 style=bold];
+APP -> HABP2[label=inh, arrowhead = tee]
+HABP2 -> KNG1[label=389 style=bold];
+APP -> KLKB1[label=inh, arrowhead = tee]
+CTSE -> APP[label=691 style=bold];
+CTSE -> APP[label=737 style=bold];
+CTSE -> APP[label=739 style=bold];
+CTSE -> APP[label=741 style=bold];
+CTSE -> APP[label=764 style=bold];
+CTSE -> F2[label=314 style=dotted];
+F2 -> CPB2[label=114 style=bold];
+CPB2 -> KNG1[label=388 style=bold];
+CTSE -> CAPN2[label=21 style=dotted];
+CAPN2 -> KNG1[label=389 style=bold];
+CAPN2 -> CAPN2[label=9 style=bold];
+CAPN2 -> CAPN2[label=19 style=bold];
+CTSE -> CTSS[label=31 style=dotted];
+CTSS -> CAPN2[label=441 style=bold];
+CTSS -> PREP[label=267 style=bold];
+PREP -> KNG1[label=387 style=bold];
+CTSS -> THOP1[label=82 style=bold];
+THOP1 -> KNG1[label=385 style=bold];
+CTSE -> CTSH[label=41 style=dotted];
+CTSE -> GZMB[label=20 style=dotted];
+GZMB -> CAPN2[label=31 style=bold];
+A2M -> CTSB[label=inh, arrowhead = tee]
+CTSB -> AGT[label=39 style=bold];
+CTSB -> AGT[label=41 style=bold];
+MMP8 -> AGT[label=40 style=bold];
+MMP8 -> AGT[label=41 style=bold];
+A2M -> ELANE[label=inh, arrowhead = tee]
+ELANE -> AGT[label=41 style=bold];
+ELANE -> AGT[label=44 style=bold];
+A2M -> CTSG[label=inh, arrowhead = tee]
+CTSG -> AGT[label=41 style=bold];
+CMA1 -> AGT[label=41 style=bold];
+PREP -> AGT[label=40 style=bold];
+THOP1 -> AGT[label=40 style=bold];
+THOP1 -> NTS[label=158 style=bold];
+CTSG -> AGT[label=37 style=bold];
+CMA1 -> AGT[label=37 style=bold];
+THOP1 -> AGT[label=37 style=bold];
+CTSS -> DPP3[label=129 style=bold];
+DPP3 -> AGT[label=37 style=bold];
+DPP3 -> AGT[label=38 style=bold];
+GZMB -> TPP2[label=390 style=bold];
+TPP2 -> AGT[label=37 style=bold];
+GZMB -> TPP2[label=490 style=bold];
+A2M -> F10[label=inh, arrowhead = tee]
+F10 -> F2[label=314 style=bold];
+}
