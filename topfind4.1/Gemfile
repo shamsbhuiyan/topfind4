@@ -36,9 +36,10 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'fastercsv'
 gem 'bio'
 gem 'paperclip'
-gem 'tzinfo-data'
-gem 'tzinfo'
-#gem 'dryml'
+#gem 'tzinfo-data'
+#gem 'tzinfo'
+gem 'will_paginate'
+
 
 
 group :development, :test do

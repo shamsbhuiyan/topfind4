@@ -67,6 +67,10 @@ Rails.application.routes.draw do
   get 'documentations/api'
   get 'documentations/index'
   
+  
+  get '/proteins/index'
+  get '/proteins/show'
+  #get '/proteins' => 'proteins#index'
   #get 'documentation' => 'documentations#index'
   #get 'license' => 'documentations#license'
 

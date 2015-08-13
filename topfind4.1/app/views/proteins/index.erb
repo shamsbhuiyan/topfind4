@@ -1,0 +1,11 @@
+<% if @protein.blank? %>
+<p>There are not any proteins currently in the system. <%= @protein %> </p>
+<% else %>
+<p>These are the current proteins in our system</p>
+<ul id="proteins">
+<%= will_paginate @protein%>
+<% @protein.each do |c| %>
+   <li><%= link_to c.name %></li>
+<% end %>
+</ul>
+<% end %>
