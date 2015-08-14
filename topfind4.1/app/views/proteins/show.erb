@@ -1,0 +1,10 @@
+<h1><%= @protein.name %></h1>
+<p><strong>Name: </strong> <%= @protein.name %><br />
+<strong>AC :</strong> <%= @protein.ac %><br />
+<strong>Created At:</strong> <%= @protein.created_at %><br />
+</p>
+<p><%= @protein.definition %></p>
+<hr />
+<%= link_to 'Back', {:action => 'index'} %>
+
+  <%= render 'footer' %>
