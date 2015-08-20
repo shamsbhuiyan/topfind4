@@ -71,6 +71,7 @@ Rails.application.routes.draw do
   get '/proteins/index'
   get '/proteins/show'
   get '/proteins/show/:id', to: 'proteins#show'
+  get '/proteins/filter'
   #get '/proteins' => 'proteins#index'
   #get 'documentation' => 'documentations#index'
   #get 'license' => 'documentations#license'

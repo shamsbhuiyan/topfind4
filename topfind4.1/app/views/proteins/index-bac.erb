@@ -1,0 +1,42 @@
+<% if @protein.blank? %>
+<p>There are not any proteins currently in the system. <%= @protein %> </p>
+<% else %>
+<p>These are the current proteins in our system</p>
+<ul id="proteins">
+<%= will_paginate @protein%>
+<% @protein.each do |c| %>
+   <li><%= link_to c.name, {:action => 'show', :id => c.id} %></li>
+<% end %>
+</ul>
+<% end %>
+<form action="/topfind/proteins" method="GET"> 			   
+				<input type="text" name="query" value="#{params[:query]}"/>
+				<p class="filterlabel">Species</p>
+			    <select name="species" id="osselect">
+			      <option></option>
+			      <% Os.all.each do |f| %>
+			        <%= "<option #{'selected' if params.key?(:species) && params[:species] == (f.name)}>#{f.name}</option>" %>
+			      <%end%>
+				</select>
+				
+			    <p class="filterlabel">Modification <img class ="help"  src='/topfind/images/help.png' alt='?' title="#{@documentations['s-modification'].first.short}"/></p>
+			    <select name="modification" id="modselect">
+			        <option></option>
+
+			    </select>
+			    
+			   	<p class="filterlabel">Function <img class ="help"  src='/topfind/images/help.png' alt='?' title="#{@documentations['s-function'].first.short}"/></p>
+			   	<select name="function">
+		            <option></option>
+		          <% ['protease','inhibitor'].each do |f| %>
+		            <%= "<option #{'selected' if params.key?(:function) && params[:function] == (f)}>#{f}</option>" %>
+		          <%end%>
+		        </select>
+		        
+		        <p class="filterlabel">Chromosome <img class ="help"  src='/topfind/images/help.png' alt='?' title="#{@documentations['s-chromosome'].first.short}"/></p><input type="text" name="chromosome" id="chromosome" size="3" value="#{params[:chromosome]}"/>	
+			    <p class="filterlabel">Position on chromosome <img class ="help"  src='/topfind/images/help.png' alt='?' title="#{@documentations['s-chromosomeposition'].first.short}"/></p><input type="text" name="chromosomeposition" id="chromosomeposition" size="3" value="#{params[:chromosomeposition]}"/>    
+				<p><submit label="filter"/></p> 
+				<div class="button reset"><a href="/topfind/proteins">reset</a></div>
+			</form>
+
+  <%= render 'footer' %>

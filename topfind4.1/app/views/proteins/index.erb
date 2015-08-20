@@ -5,9 +5,15 @@
 <ul id="proteins">
 <%= will_paginate @protein%>
 <% @protein.each do |c| %>
-   <li><%= link_to c.name, {:action => 'show', :id => c.id} %></li>
+   <li><%= link_to c.name, {:action => 'show', :id => c.protein_id} %></li>
 <% end %>
 </ul>
 <% end %>
 
-  <%= render 'footer' %>
+<%= form_tag("index", method: "get") do %>
+  <%= label_tag(:query, "Search for:") %>
+  <%= text_field_tag(:query) %>
+  <%= submit_tag("Search") %>
+<% end %>
+
+<%= render 'footer' %>

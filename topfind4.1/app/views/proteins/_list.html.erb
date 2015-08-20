@@ -1,0 +1,26 @@
+<%# app/views/students/_list.html.erb %>
+<div id="filterrific_results">
+
+  <div>
+    <%= page_entries_info students # provided by will_paginate %>
+  </div>
+
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>AC</th>
+      <th>Definition</th>
+      <th>Chromosome</th>
+    </tr>
+    <% students.each do |student| %>
+      <tr>
+        <td><%= link_to(protein.ac, protein_path(protein)) %></td>
+        <td><%= protein.ac %></td>
+        <td><%= protein.definition %></td>
+        <td><%= protein.chromosome %></td>
+      </tr>
+    <% end %>
+  </table>
+</div>
+
+<%= will_paginate proteins # provided by will_paginate %>

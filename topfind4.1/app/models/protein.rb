@@ -1,4 +1,7 @@
+
 class Protein < ActiveRecord::Base
+
+include Filterable
   def self.add
 
     change_table :protein do |t|  
@@ -69,6 +72,7 @@ class Protein < ActiveRecord::Base
   
   has_many :isoforms, -> { uniq }
   has_many :isoforms, -> { uniq }
+  
   
  def is_canonical
     !self.ac.include?('-') || self.ac.include?('-1')
