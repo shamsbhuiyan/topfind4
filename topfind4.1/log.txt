@@ -1,1 +1,1 @@
-["(searchnames.name LIKE ?)", "33%"]
+[]

@@ -24,7 +24,7 @@ class ProteinsController < ApplicationController
     orqueries = Array.new
     conditionvars = Hash.new
     #@protein = Array.new
-    
+    puts "[#{params[:species]}]"
     #checking filter paramters
     if params[:query].present?
     
@@ -42,41 +42,14 @@ class ProteinsController < ApplicationController
     
     #the normal search when you can't find just one protein
     if (params.keys&['query']).present? && !@protein.present?
-        #match to proteinname, gene name, alternate names, merops family or code
-      if params[:query].present?
-        #orconditions << "searchnames.name IN ('#{namevariants}')"
-        orconditions << "searchnames.name LIKE ?"
-        orqueries << "#{params[:query]}%"
-        joins << :searchnames
-      end
-
-      
-      querystring = Array.new
-      querystring << andconditions if andconditions.present?
-      querystring << "(#{orconditions.join(' OR ')})" if orconditions.present?
-      querystring.compact!
-      conditions << querystring.join(' AND ')
-      conditions << andqueries
-      conditions << orqueries
-      conditions = conditions.flatten.compact
-      File.open("log.txt", "w") { |file| file.write(conditions)}
-      
-      #res = Protein.all.scoped( :joins => joins, :select => select.join(','), :conditions => conditions, :order => 'proteins.name' )
-
-      #@protein =  res
-      
+       #match to proteinname, gene name, alternate names, merops family or codey
       #so search through search name. Return a list. Now link it to the protein table
-      #@results = Searchname.where("name LIKE ? " , "%#{params[:query]}%")
       @protein = Protein.joins(:searchnames).where("searchnames.name LIKE ?", "%#{params[:query]}%").paginate(:page => params[:page], :per_page => 20)
-
-=begin
-      @results.each do |result|
-         @protein = @protein.merge(Protein.where(id: result.protein_id))
+      
+      #check for species
+      if params[:species].present?
+          @protein = @protein.where(species_id: params[:species])
       end
-=end
-
-
-    
     else
       @protein = Protein.all.paginate(:page => params[:page], :per_page => 20)
     end

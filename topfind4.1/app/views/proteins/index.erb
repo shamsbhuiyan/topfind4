@@ -13,6 +13,9 @@
 <%= form_tag("index", method: "get") do %>
   <%= label_tag(:query, "Search for:") %>
   <%= text_field_tag(:query) %>
+  
+  <%= select_tag :species, options_for_select(Species.all.collect{|sp| [sp.name, sp.id]}, params[:species]), {prompt: "Select Species"} %>
+
   <%= submit_tag("Search") %>
 <% end %>
 
