@@ -5,7 +5,7 @@
 <ul id="proteins">
 <%= will_paginate @protein%>
 <% @protein.each do |c| %>
-   <li><%= link_to c.name, {:action => 'show', :id => c.protein_id} %></li>
+   <li><%= link_to c.name, {:action => 'show', :id => c.id} %></li>
 <% end %>
 </ul>
 <% end %>

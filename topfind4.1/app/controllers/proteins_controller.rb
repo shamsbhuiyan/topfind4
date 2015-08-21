@@ -23,7 +23,7 @@ class ProteinsController < ApplicationController
     orconditions = Array.new
     orqueries = Array.new
     conditionvars = Hash.new
-    
+    #@protein = Array.new
     
     #checking filter paramters
     if params[:query].present?
@@ -61,17 +61,21 @@ class ProteinsController < ApplicationController
       conditions = conditions.flatten.compact
       File.open("log.txt", "w") { |file| file.write(conditions)}
       
-      
       #res = Protein.all.scoped( :joins => joins, :select => select.join(','), :conditions => conditions, :order => 'proteins.name' )
 
       #@protein =  res
       
       #so search through search name. Return a list. Now link it to the protein table
-      @protein = Searchname.where("name LIKE ? " , "%#{params[:query]}%").paginate(:page => params[:page], :per_page => 20)
-      
-      
+      #@results = Searchname.where("name LIKE ? " , "%#{params[:query]}%")
+      @protein = Protein.joins(:searchnames).where("searchnames.name LIKE ?", "%#{params[:query]}%").paginate(:page => params[:page], :per_page => 20)
 
-    
+=begin
+      @results.each do |result|
+         @protein = @protein.merge(Protein.where(id: result.protein_id))
+      end
+=end
+
+
     
     else
       @protein = Protein.all.paginate(:page => params[:page], :per_page => 20)
