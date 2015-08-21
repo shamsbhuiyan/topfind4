@@ -24,7 +24,9 @@ class ProteinsController < ApplicationController
     orqueries = Array.new
     conditionvars = Hash.new
     #@protein = Array.new
-    puts "[#{params[:species]}]"
+    puts "species: [#{params[:species]}]"
+    puts "chromosome: [#{params[:chr]}]"
+    puts "position on chromosome: [#{params[:pos]}]"
     #checking filter paramters
     if params[:query].present?
     
@@ -48,8 +50,21 @@ class ProteinsController < ApplicationController
       
       #check for species
       if params[:species].present?
+          #can add this where to above. Just need to figure out what to do about the blank option
+	#perhaps I can get the Model.where feature to go over an array?
           @protein = @protein.where(species_id: params[:species])
       end
+      
+      #check chromosome
+      if params[:chr].present?
+          @protein = @protein.where(chromosome: params[:chr])
+      end
+      
+       #check position on chromsome
+      if params[:pos].present?
+          @protein = @protein.where("band LIKE ?", "%#{params[:pos]}%")
+      end
+
     else
       @protein = Protein.all.paginate(:page => params[:page], :per_page => 20)
     end
