@@ -1,0 +1,6 @@
+
+<a href="/proteins/index">Proteins</a>
+<%= form_tag({:controller => "proteins", :action => "index"}, :method => "get") do %>
+  <%= label_tag(:query, "Search for:") %>
+  <%= text_field_tag(:query) %>
+<% end %>
