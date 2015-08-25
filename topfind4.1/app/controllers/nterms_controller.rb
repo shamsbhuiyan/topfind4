@@ -1,7 +1,13 @@
 class NtermsController < ApplicationController
 
   def index
+  
+     #filtering
+    #if (params.keys&['seq']).present? && !@nterm.present?  
+    
+   # else
     @nterm = Nterm.all.paginate(:page => params[:page], :per_page => 20)
+    #end
     
   end
   

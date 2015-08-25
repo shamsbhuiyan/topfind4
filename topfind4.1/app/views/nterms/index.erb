@@ -1,15 +1,31 @@
 <%= render 'header' %>
 <% if @nterm.blank? %>
-<p>There are not any proteins currently in the system. <%= @nterm %> </p>
+ <p>There are not any nterms currently in the system. <%= @nterm %> </p>
 <% else %>
-<p>These are the current proteins in our system</p>
-<ul id="nterms">
-<%= will_paginate @nterm%>
-<% @nterm.each do |c| %>
-   <li><%= c.modificationclass%><%= c.protein.sequence[c.pos..(c.pos + 4)] %><%= link_to c.protein.recname, {:controller=> 'proteins', :action => 'show', :id => c.protein_id} %></li>
-   
+ <p>These are the nterms in our system</p>
+ <ul id="nterms">
+ <%= will_paginate @nterm%>
+  <table>
+    <thead>
+        <th>Modification</th>
+        <th>Position</th>
+        <th>Sequence</th>
+        <th>Protein</th>
+    </thead>
+ <tbody>
+ <% @nterm.each do |c| %>
 
+ <tr>
+ <td> <%= c.modificationclass %></td><td><%= c.pos + 1 %><td><%= c.protein.sequence[c.pos..(c.pos + 4)] %></td><td><%= link_to c.protein.recname, {:controller=> 'proteins', :action => 'show', :id => c.protein_id} %></td>
+
+ </tr> 
+ <% end %></tbody>
+ </table>
+ </ul>
 <% end %>
-</ul>
-<% end %>
+ 
+  <%= form_tag("index", method: "get") do %>
+   <%= label_tag(:query, "Sequence Search:") %>
+   <%= text_field_tag(:seq) %>
+ <% end %>
 <%= render 'footer' %>

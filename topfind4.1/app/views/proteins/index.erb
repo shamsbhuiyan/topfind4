@@ -1,29 +1,39 @@
 <%= render 'header' %>
 <% if @protein.blank? %>
-<p>There are not any proteins currently in the system. <%= @protein %> </p>
+ <p>There are not any proteins currently in the system. <%= @protein %> </p>
 <% else %>
-<p>These are the current proteins in our system</p>
-<ul id="proteins">
-<%= will_paginate @protein%>
-<% @protein.each do |c| %>
-   <li><%= link_to c.name, {:action => 'show', :id => c.id} %></li>
-<% end %>
-</ul>
+ <p>These are the current proteins in our system</p>
+ <ul id="proteins">
+
+ <%= will_paginate @protein%>
+    <table>
+    <thead>
+        <th>Protein</th>
+    </thead>
+ <tbody>
+ <% @protein.each do |c| %>
+   <tr>
+ <td><%= link_to c.recname, {:action => 'show', :id => c.id} %></td>
+
+ </tr> 
+ <% end %></tbody>
+ </table>
+ </ul>
 <% end %>
 
-<%= form_tag("index", method: "get") do %>
-  <%= label_tag(:query, "Search for:") %>
-  <%= text_field_tag(:query) %>
+ <%= form_tag("index", method: "get") do %>
+   <%= label_tag(:query, "Search for:") %>
+   <%= text_field_tag(:query) %>
   
-  <%= select_tag :species, options_for_select(Species.all.collect{|sp| [sp.name, sp.id]}, params[:species]), {prompt: "Select Species"} %>
-  <%= select_tag :modifications, options_for_select(
+   <%= select_tag :species, options_for_select(Species.all.collect{|sp| [sp.name, sp.id]}, params[:species]), {prompt: "Select Species"} %>
+   <%= select_tag :modifications, options_for_select(
 Terminusmodification.includes(:kw).select{|t| !t.kw.nil?}.collect{|t| [t.kw.name, t.kw.name]}.uniq, params[:modifications]), {prompt: "Select Modifications"} %>
-  <%=select_tag :fun, options_for_select(["Protease", "Inhibitor"]), {prompt: "Select Function"} %>
-  <%= label_tag(:chr, "Chromosome:") %>
-  <%= text_field_tag(:chr) %>
-  <%# label_tag(:pos, "Position on Chromosome:") %>
-  <%# text_field_tag(:pos) %>
-  <%= submit_tag("Search") %>
-<% end %>
+   <%=select_tag :fun, options_for_select(["Protease", "Inhibitor"]), {prompt: "Select Function"} %>
+   <%= label_tag(:chr, "Chromosome:") %>
+   <%= text_field_tag(:chr) %>
+   <%# label_tag(:pos, "Position on Chromosome:") %>
+   <%# text_field_tag(:pos) %>
+   <%= submit_tag("Search") %>
+ <% end %>
 
 <%= render 'footer' %>
