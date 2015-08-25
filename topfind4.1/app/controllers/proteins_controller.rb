@@ -28,6 +28,7 @@ class ProteinsController < ApplicationController
     puts "chromosome: [#{params[:chr]}]"
     puts "position on chromosome: [#{params[:pos]}]"
     puts "modification: [#{params[:modifications]}]"
+    puts "function: [#{params[:fun]}]"
     #checking filter paramters
     if params[:query].present?
     
@@ -73,8 +74,11 @@ class ProteinsController < ApplicationController
 
 	
       end
-      
-      @protein = @protein.joins(:substrates)
+      if params[:fun] == "Protease"
+         @protein = @protein.joins(:substrates)
+      elsif params[:fun] == "Inhibitor"
+         @protein = @protein.joins(:inhibited_proteases)
+      end
       
     else
       @protein = Protein.all.paginate(:page => params[:page], :per_page => 20)

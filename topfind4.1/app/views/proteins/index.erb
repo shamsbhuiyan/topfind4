@@ -17,6 +17,7 @@
   <%= select_tag :species, options_for_select(Species.all.collect{|sp| [sp.name, sp.id]}, params[:species]), {prompt: "Select Species"} %>
   <%= select_tag :modifications, options_for_select(
 Terminusmodification.includes(:kw).select{|t| !t.kw.nil?}.collect{|t| [t.kw.name, t.kw.name]}.uniq, params[:modifications]), {prompt: "Select Modifications"} %>
+  <%=select_tag :fun, options_for_select(["Protease", "Inhibitor"]), {prompt: "Select Function"} %>
   <%= label_tag(:chr, "Chromosome:") %>
   <%= text_field_tag(:chr) %>
   <%= label_tag(:pos, "Position on Chromosome:") %>
