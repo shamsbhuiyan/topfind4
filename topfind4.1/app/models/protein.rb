@@ -335,10 +335,12 @@ class Kw < ActiveRecord::Base
       t.string :category
     end
    end
-  
+
   has_and_belongs_to_many :proteins
   has_many :terminusmodifications
   has_many :kwsynonymes
+  
+
 end
 
 class Kwsynonyme < ActiveRecord::Base

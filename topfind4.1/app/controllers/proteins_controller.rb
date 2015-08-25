@@ -27,6 +27,7 @@ class ProteinsController < ApplicationController
     puts "species: [#{params[:species]}]"
     puts "chromosome: [#{params[:chr]}]"
     puts "position on chromosome: [#{params[:pos]}]"
+    puts "modification: [#{params[:modifications]}]"
     #checking filter paramters
     if params[:query].present?
     
@@ -46,7 +47,7 @@ class ProteinsController < ApplicationController
     if (params.keys&['query']).present? && !@protein.present?
        #match to proteinname, gene name, alternate names, merops family or codey
       #so search through search name. Return a list. Now link it to the protein table
-      @protein = Protein.joins(:searchnames).where("searchnames.name LIKE ?", "%#{params[:query]}%").paginate(:page => params[:page], :per_page => 20)
+      @protein = Protein.joins(:searchnames).where("searchnames.name LIKE ?", "%#{params[:query]}%").paginate(:page => params[:page], :per_page => 20).uniq
       
       #check for species
       if params[:species].present?
@@ -65,6 +66,16 @@ class ProteinsController < ApplicationController
           @protein = @protein.where("band LIKE ?", "%#{params[:pos]}%")
       end
 
+      #check position on modifications
+      if params[:modifications].present?
+          ## Currently params[:modifications] can either be set to kws.id or kws.name, I need to use one of these on nterms?
+	@protein = @protein.joins(:nterms => {:terminusmodification => :kw}, :cterms => {:terminusmodification => :kw}).where("kws.name = ?", params[:modifications])
+
+	
+      end
+      
+      @protein = @protein.joins(:substrates)
+      
     else
       @protein = Protein.all.paginate(:page => params[:page], :per_page => 20)
     end
@@ -76,7 +87,10 @@ end
 
   
   def show
+    #protein table id is given. It will find it
     @protein = Protein.find(params[:id])
+    
+    
   end
   
 

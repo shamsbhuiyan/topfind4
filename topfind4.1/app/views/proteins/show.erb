@@ -1,7 +1,12 @@
 <h1><%= @protein.name %></h1>
-<p><strong>Name: </strong> <%= @protein.name %><br />
+<p><strong>Name: </strong> <%= @protein.recname %><br />
+
+<% @protein.proteinnames.each do |c| %>
+   <% c.full %>
+<% end %>
 <strong>AC :</strong> <%= @protein.ac %><br />
 <strong>Created At:</strong> <%= @protein.created_at %><br />
+<strong>Sequence</strong> <%= @protein.sequence %><br />
 </p>
 <p><%= @protein.definition %></p>
 <hr />
