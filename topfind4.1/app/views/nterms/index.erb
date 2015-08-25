@@ -1,0 +1,15 @@
+<%= render 'header' %>
+<% if @nterm.blank? %>
+<p>There are not any proteins currently in the system. <%= @nterm %> </p>
+<% else %>
+<p>These are the current proteins in our system</p>
+<ul id="nterms">
+<%= will_paginate @nterm%>
+<% @nterm.each do |c| %>
+   <li><%= c.modificationclass%><%= c.protein.sequence[c.pos..(c.pos + 4)] %><%= link_to c.protein.recname, {:controller=> 'proteins', :action => 'show', :id => c.protein_id} %></li>
+   
+
+<% end %>
+</ul>
+<% end %>
+<%= render 'footer' %>

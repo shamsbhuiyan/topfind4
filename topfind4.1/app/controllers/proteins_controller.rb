@@ -12,17 +12,7 @@ class ProteinsController < ApplicationController
   
   def index
     
-    #arrays required for searching
-    joins = Array.new
-    includes = Array.new
-    conditions = Array.new
-    select = ['DISTINCT proteins.*']
-    having = Array.new
-    andconditions = Array.new
-    andqueries = Array.new
-    orconditions = Array.new
-    orqueries = Array.new
-    conditionvars = Hash.new
+
     #@protein = Array.new
     puts "species: [#{params[:species]}]"
     puts "chromosome: [#{params[:chr]}]"
@@ -79,7 +69,8 @@ class ProteinsController < ApplicationController
       elsif params[:fun] == "Inhibitor"
          @protein = @protein.joins(:inhibited_proteases)
       end
-      
+    
+    #if there is no search criteria present
     else
       @protein = Protein.all.paginate(:page => params[:page], :per_page => 20)
     end
