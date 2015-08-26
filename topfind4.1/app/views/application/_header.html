@@ -1,7 +1,8 @@
-<h1> TopFIND 4.1 </h1>
-<a href="/proteins/index">Proteins</a>
-<a href="/nterms/index">Nterms</a>
+<table><tr> <td> <h1> TopFIND 4.1 By Shams</h1> </td> <td> <a href="/proteins/index">Proteins</a></td> <td>
+<a href="/nterms/index">N termini</a> </td> <td>
+<a href="/cterms/index">C termini</a> </td><td>
 <%= form_tag({:controller => "proteins", :action => "index"}, :method => "get") do %>
   <%= label_tag(:query, "Search for:") %>
   <%= text_field_tag(:query) %>
-<% end %>
+<% end %></td>
+</tr></table>

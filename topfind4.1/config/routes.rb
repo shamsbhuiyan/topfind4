@@ -71,4 +71,9 @@ Rails.application.routes.draw do
   get '/nterms/index'
   get '/nterms/show'
   get 'nterms/show/:id', to: 'nterms#show'
+  
+  #cterms routes
+  get '/cterms/index'
+  get '/cterms/show'
+  get 'cterms/show/:id', to: 'cterms#show'
 end

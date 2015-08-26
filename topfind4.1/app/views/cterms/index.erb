@@ -1,10 +1,10 @@
 <%= render 'header' %>
-<% if @nterm.blank? %>
- <p>There are not any nterms currently in the system. <%= @nterm %> </p>
+<% if @cterm.blank? %>
+ <p>There are not any cterms currently in the system. <%= @nterm %> </p>
 <% else %>
- <p>These are the nterms in our system</p>
+ <p>These are the cterms in our system</p>
  <ul id="nterms">
- <%= will_paginate @nterm%>
+ <%= will_paginate @cterm%>
   <table>
     <thead>
         <th>Modification</th>
@@ -13,10 +13,10 @@
         <th>Protein</th>
     </thead>
  <tbody>
- <% @nterm.each do |c| %>
+ <% @cterm.each do |c| %>
 
  <tr>
- <td> <%#= c.modificationclass %></td><td><%= c.pos + 1 %><td><%= c.protein.sequence[c.pos..(c.pos + 4)] %></td><td><%= link_to c.protein.recname, {:controller=> 'proteins', :action => 'show', :id => c.protein_id} %></td>
+ <td> <%# c.modificationclass %></td><td><%= c.pos + 1 %><td><%= c.protein.sequence[c.pos..(c.pos + 4)] %></td><td><%= link_to c.protein.recname, {:controller=> 'proteins', :action => 'show', :id => c.protein_id} %></td>
 
  </tr> 
  <% end %></tbody>

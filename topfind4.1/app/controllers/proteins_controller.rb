@@ -9,7 +9,7 @@ class ProteinsController < ApplicationController
   require 'graph/mapMouseHuman'
   
   include ActionView::Helpers::NumberHelper
-  
+
   def index
     
 
@@ -35,7 +35,7 @@ class ProteinsController < ApplicationController
     end
     
     #the normal search when you can't find just one protein
-    if (params.keys&['query']).present? && !@protein.present?
+    if (params.keys&['query', 'species']).present? && !@protein.present?
        #match to proteinname, gene name, alternate names, merops family or codey
       #so search through search name. Return a list. Now link it to the protein table
       @protein = Protein.joins(:searchnames).where("searchnames.name LIKE ?", "%#{params[:query]}%").paginate(:page => params[:page], :per_page => 20).uniq
