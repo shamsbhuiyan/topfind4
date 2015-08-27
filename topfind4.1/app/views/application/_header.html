@@ -1,8 +1,15 @@
-<table><tr> <td> <h1> TopFIND 4.1 By Shams</h1> </td> <td> <a href="/proteins/index">Proteins</a></td> <td>
-<a href="/nterms/index">N termini</a> </td> <td>
-<a href="/cterms/index">C termini</a> </td><td>
+
+<table bgcolor="#000000"><tr>  <td> <h1>  TopFIND 4.1 By Shams</h1> </td> <td> 
+<a href="/proteins/index"><h2>Proteins</a></td></h2> <td>
+ <a href="/nterms/index"><h2>NTerm</a> </h2> </td> <td>
+<a href="/cterms/index"><h2>CTerm</a> </td></h2><td>
+<a href="/cterms/index"><h2>Modification</a> </td></h2><td>
+<a href="/cterms/index"><h2>TopFINDER</a> </td></h2><td>
+<a href="/cterms/index"><h2>PathFINDER</a> </td></h2><td>
+<a href="/cterms/index"><h2>Updates</a> </td></h2><td>
+<a href="/cterms/index"><h2>Help</a> </td></h2><td>
 <%= form_tag({:controller => "proteins", :action => "index"}, :method => "get") do %>
-  <%= label_tag(:query, "Search for:") %>
+  <%= label_tag(:query, "Search:") %>
   <%= text_field_tag(:query) %>
 <% end %></td>
 </tr></table>

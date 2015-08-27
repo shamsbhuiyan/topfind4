@@ -53,10 +53,13 @@ class NtermsController < ApplicationController
   end
   
   def show
-    
-    #protein table id is given. It will find it
-    @nterm = Nterm.find(params[:id])
-
+     puts "id search: [#{params[:id]}]" 
+     @output = Nterm.generate_csv(params[:id])
+     respond_to do |format|
+       format.html
+       format.csv { send_data @output.as_csv }
+     end
+     p @output
   end
 
 end

@@ -1,3 +1,4 @@
+require 'csv'
 class Nterm < ActiveRecord::Base
 
   def self.add

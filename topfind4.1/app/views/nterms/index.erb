@@ -23,6 +23,10 @@
  </table>
  </ul>
 <% end %>
+ <div>
+<%= link_to "Export to CSV", {:method=> "show", :id => @nterm.map {|i| i.id }} %>
+
+ </div>
  
   <%= form_tag("index", method: "get") do %>
    <%= label_tag(:seq, "Sequence Search:") %>

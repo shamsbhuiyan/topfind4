@@ -1,7 +1,7 @@
 // Place all the styles related to the proteins controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-html, body {color: #193440; background: #F8F8FF;}
+html, body {color: #193440; background: #FFFFE0;}
 
 
 .page-header { 
@@ -114,7 +114,7 @@ float:left;
 }
 
 .top-search input:focus {
-color:black;
+color: white;
 }
 
 
@@ -195,11 +195,11 @@ body {
   width: 100%;  
   margin: 0 auto 20px;
   margin:0;
-  font: 12px "Lucida Grande", "Trebuchet MS", Arial, sans-serif; line-height: 18px;
+  font: 14px "Lucida Grande", "Trebuchet MS", Arial, sans-serif; line-height: 18px;
 }
 h1, h2, h3 {font-weight: normal;}
-h1 {margin: 20px 0 10px; font-size: 22px; line-height: 30px;}
-h2 {margin: 15px 0 10px; font-size: 18px; line-height: 18px;}
+h1 {margin: 15px 0 10px; font-size: 22px; line-height: 30px; color: #FFD700;}
+h2 {margin: 15px 0 10px; font-size: 18px; line-height: 18px; color: #white;}
 h3 {margin: 10px 0 5px;  font-size: 16px; line-height: 16px;}
 h4 {margin: 10px 0 5px;  font-size: 14px; line-height: 14px;}
 h5 {margin: 10px 0 5px;  font-size: 12px; line-height: 12px;}
@@ -209,7 +209,7 @@ li {margin-left: 20px;}
 
 a {
   border-bottom: 1px dotted #ccc;
-  color: #222;
+  color: #grey;
   text-decoration: none; 
 }
 a:hover {
@@ -218,7 +218,7 @@ a:hover {
   text-decoration: none; 
 }
 
-h1 a, h2 a, h3 a {border: none; background: none;}
+h1 a, h2 a, h3 a {border: none; background: none; color: white; border-bottom: 1px dotted white;}
 
 pre, code {
     font-family:  "Courier New", Courier, monospace;

@@ -39,6 +39,6 @@ test "the truth" do
   
   def test_fasterCSV
     found = Nterm.find(1)
-    Nterm.generate_csv([1,2])
+    puts Nterm.generate_csv([1,2])
   end
 end
