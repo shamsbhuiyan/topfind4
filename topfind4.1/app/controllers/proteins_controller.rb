@@ -9,7 +9,7 @@ class ProteinsController < ApplicationController
   require 'graph/mapMouseHuman'
   
   include ActionView::Helpers::NumberHelper
-
+#Did I do the associations correctly? Show Nik the Protein.find(1).gn.name issue
   def index
     
 
@@ -85,7 +85,40 @@ end
     #protein table id is given. It will find it
     @protein = Protein.find(params[:id])
     
+    @annotations_main = @protein.ccs.main
+    @annotations_additional = @protein.ccs.additional
+    @documentations = Documentation.all.group_by(&:name)
+    @ppi = false
     
+    #For the neighborhoodd stuff
+    @cleavages = @protein.cleavages
+    @cleavages = @cleavages.map {|x| x if x.substrate_id}.compact
+    
+    @cleavagesites = @protein.cleavages.collect{|t| t.cleavagesite} 
+    @cleavagesites.delete(nil)
+    
+    @inverse_cleavages = @protein.inverse_cleavages
+      
+    @inhibitions = @protein.inhibitions
+
+    @inverse_inhibitions = @protein.inverse_inhibitions
+      
+    @cterms = @protein.cterms
+      
+    @nterms = @protein.nterms
+    
+    analysis = Analysis.new(@protein,
+    @cleavages,
+    @cleavagesites,
+    @inverse_cleavages,
+    @inhibitions,
+    @inverse_inhibitions,
+    @cterms,
+    @nterms,
+    false,
+    [],
+    @ppi)
+    @network = analysis.graph
   end
   
 
