@@ -1,0 +1,35 @@
+<%= render 'header' %>
+<def tag='general-protein-information'>
+	<section class="left">
+	  <section class="block">
+	  
+	    <h1><%= @ter.name %></h1>
+	    <table class="protein-summary annotation">
+                <h3> General Information </h3> <a class="uniprotlink" target="_blank" href="http://www.uniprot.org/uniprot/<%= @ter.ac %>" UniprotKB </a>
+	      <tr> 
+	        <th>UniprotKB</th> 
+	        <td><%= @ter.ac %> </br></td>
+	      </tr><tr> 
+	        <th>PSIMOD ID</th> 
+	        <td><%= @ter.psimodid %> </td>
+	      </tr><tr>
+	        <th>Category</th>
+	        <td><%#= @ter.kw.name if !@ter.kw.blank? %></td>
+	      </tr><tr>
+	        <th>Description</th>
+	        <td><%= @ter.description %></td>
+	      </tr>
+	      <tr>
+	        <th>Cellular Distribution</th>
+	        <td><%= @ter.subcell %></td>
+	      </tr>	      <tr>
+	        <th>Publications</th>
+	        <td><td>
+	      </tr>
+	    </table>
+	  </section>             
+	</section>
+
+
+	
+</def>

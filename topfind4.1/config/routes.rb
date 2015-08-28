@@ -77,4 +77,8 @@ Rails.application.routes.draw do
   get '/cterms/index'
   get '/cterms/show'
   get 'cterms/show/:id', to: 'cterms#show'
+  
+  #terminus modification
+  get '/terminusmodifications/index'
+  get '/terminusmodifications/show'
 end

@@ -50,124 +50,14 @@
 	</section> 	  
 	
 <section class="full category">
-              <pagenav/>
-              <a name="neigbourhood"/><h2>Neighbourhood <img class ="help"  src='/topfind/images/help.png' alt='?' title="#{@documentations['p-cytoscape'].first.short}"/> </h2>  
-	    <def tag="cytoscape">
-  <script type="text/javascript">
-      window.onload=function() {
-          // id of Cytoscape Web container div
-          var div_id = "cytoscapeweb";
-          
-		  var xml = "<%=escape_javascript(@network)%>"
-          // initialization options
-          var options = {
-              // where you have the Cytoscape Web SWF
-              swfPath: "/assets/javascripts/cytoscapeweb/swf/CytoscapeWeb",
-              // where you have the Flash installer SWF
-              flashInstallerPath: "/assets/javascripts/cytoscapeweb/swf/playerProductInstall"
-          };
-          
-          
-          
-          // init and draw
-          var vis = new org.cytoscapeweb.Visualization(div_id, options);
-          vis.addListener("dblclick", "nodes", function(evt) {
-			var nodes = evt.target;
-			window.open(nodes.data.link,'_blank');
-		  });
-          
-          var shapeMapper = {
-          		attrName: "nodetype",
-          		entries: [ {attrValue: "protein", value: "ELLIPSE"},
-          				   {attrValue: "protease", value: "VEE"},
-          				   {attrValue: "additional", value: "ROUNDRECT"} ]
-          }; 
-          
-          var colorMapper = {
-            	attrName: "id",
-            	entries: [ { attrValue: "<%= @protein.shortname %>", value: "red"} ]
-            	};
-          var edgearrowMapper = {
-              attrName: "edgetype",
-              entries: [ {attrValue: "cleavage", value: "DELTA"},
-                         {attrValue: "inhibition", value: "t"},
-                         {attrValue: "interaction", value: "NONE" } ]
-          };  	
-          var edgecolorMapper = {
-              attrName: "edgetype",
-              entries: [ {attrValue: "cleavage", value: "blue"},
-                         {attrValue: "inhibition", value: "red"},
-                         {attrValue: "interaction", value: "#333333"} ]
-          };  	
-          
-          var style = {
-            global: {
-                backgroundColor: "#fff",
-                tooltipDelay: 1000
-            },
-            nodes: {
-                shape: { defaultValue: "ELLIPSE",
-                         discreteMapper: shapeMapper },
-                color: { defaultValue: "#fff",
-                         discreteMapper: colorMapper },  
-                opacity: 1,
-                size: { defaultValue: 36 },
-                label: { passthroughMapper: { attrName: "id" } },
-                tooltipText: { passthroughMapper: { attrName: "label" } },
-                borderColor: "#333",
-                labelFontSize: 15,
-                tooltipFontSize: 20,
-                tooltipText: "<b>${label}</b>"
-            },
-            edges: {
-                color: { defaultValue: "#aaa",
-                         discreteMapper: edgecolorMapper},
-                width: 2,
-                mergeWidth: 2,
-                opacity: 1,
-                label: { passthroughMapper: { attrName: "label" } },
-                labelFontSize: 10,
-                labelFontWeight: "bold",
-                targetArrowShape: { defaultValue: 'NONE',
-                                    discreteMapper: edgearrowMapper}
-             }
-           };
-          
-          var draw_options = {
-              // your data goes here
-              network: xml ,
               
-              // show edge labels too
-              edgeLabelsVisible: false,
-              nodeTooltipsEnabled: true,     
-              
-              // let's try another layout
-              layout: "Radial",
-              options: { angleWidth: 180, radius: 10 },
-              
-              //layout: "ForceDirected"
-              
-              // set the style at initialisation
-              visualStyle: style,
-              
-              // hide pan zoom
-              panZoomControlVisible: true 
-          };
-          
-          
-          
-          vis.draw(draw_options);         
-      };
-
-  </script> 
-
-
-  <div id="cytoscapeweb">
-      Network neighborhood
-  </div>
-</def>
             </section>
-	
+	            <section class="full category">
+              <pagenav/>
+              <a name="features"/><h2>Domains &amp; Features</h2>
+            </section><section class="full">
+              <%=@simplepanel%>
+            </section>
 	
 </def>
 

@@ -1,0 +1,30 @@
+<%= render 'header' %>
+<% if @term.blank? %>
+ <p>There are not any proteins currently in the system. <%= @protein %> </p>
+<% else %>
+ <p>These are the current proteins in our system</p>
+ <ul id="terminusmodifications">
+
+ <%= will_paginate @term%>
+    <table>
+    <thead>
+        <th><h2>Terminus Modifications<h2></th>
+    </thead>
+ <tbody>
+ <% @term.each do |c| %>
+   <tr>
+     <td><%= link_to c.name, {:action => 'show', :id => c.id} %></td>
+    </tr> 
+ <% end %></tbody>
+ </table>
+ </ul>
+<% end %>
+
+
+ <%= form_tag("index", method: "get") do %>
+   
+   <%= select_tag :modifications, options_for_select(
+Terminusmodification.includes(:kw).select{|t| !t.kw.nil?}.collect{|t| [t.kw.name, t.kw.name]}.uniq, params[:modifications]), {prompt: "Select Modifications"} %>
+   <%=select_tag :type, options_for_select(["N-Termini", "C-Termini"]), {prompt: "Select Type"} %>
+   <%= submit_tag("Search") %>
+ <% end %>
