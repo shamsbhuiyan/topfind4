@@ -1,0 +1,49 @@
+Removed Items:
+	-Models
+		-evidence2gocomponents
+		-evidence2tissues
+		-evidencerelations
+		-gocomponents
+		-gofunctionlinks
+		-gofunctions
+		-golinks
+		-goprocesses
+		-schemamigrations
+	-Controllers
+		-chains
+		-cleavages (?)
+		-cleavagesites
+		-evidencecodes
+		-evidences(?)
+		-front
+		-gocomponents
+		-gofunctionlinks
+		-golinks
+		-goprocesses
+		-inhibitions
+		-moleculenames
+		-molecules
+		-publications
+		-tissues
+		-tissuesynonymes
+Things that are new and shiny
+	-Protein Searching
+	-Protein listing
+	-Nterm searching
+	-Nterm listing
+	-Cterm searching
+	-Cterm listing
+	-Terminus Modification listing
+	-Terminus Modification searching (A little weird)
+	-Documentations
+Things started but not done
+	-Protein Pages Showing
+	-Protein Pages Filtering
+	-Stylin'
+	-CSV Exports
+Things not started
+	-Homepage
+Things for set up
+Massive Question Marks
+	-Users
+	-Imports
