@@ -69,14 +69,15 @@ Rails.application.routes.draw do
   
   #nterm routes
   get '/nterms/index'
-  get '/nterms/show'
+  #get '/nterms/show'
   #get 'nterms/show/:id', to: 'nterms#show'
-  
+  get 'show', to: 'nterms#show', as: :nterms_export
   
   #cterms routes
   get '/cterms/index'
-  get '/cterms/show'
-  get 'cterms/show/:id', to: 'cterms#show'
+  #get '/cterms/show'
+  #get 'cterms/show/:id', to: 'cterms#show'
+  get 'show', to: 'cterms#show', as: :cterms_export
   
   #terminus modification
   get '/terminusmodifications/index'

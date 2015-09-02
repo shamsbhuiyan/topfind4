@@ -16,13 +16,18 @@
  <% @cterm.each do |c| %>
 
  <tr>
- <td> <%# c.modificationclass %></td><td><%= c.pos + 1 %><td><%= c.protein.sequence[c.pos..(c.pos + 4)] %></td><td><%= link_to c.protein.recname, {:controller=> 'proteins', :action => 'show', :id => c.protein_id} %></td>
+ <td> <%= c.modificationclass %></td><td><%= c.pos + 1 %><td><%= c.protein.sequence[c.pos..(c.pos + 4)] %></td><td><%= link_to c.protein.recname, {:controller=> 'proteins', :action => 'show', :id => c.protein_id} %></td>
 
  </tr> 
  <% end %></tbody>
  </table>
  </ul>
 <% end %>
+ <div>
+<%#= link_to "Export to CSV", {:method=> "show", :id => @nterm.map {|i| i.id }} %>
+<%= link_to "Export to CSV", cterms_export_path(:format => :csv, :ids => @cterm.map {|i| i.id }) %>
+
+ </div>
  
   <%= form_tag("index", method: "get") do %>
    <%= label_tag(:seq, "Sequence Search:") %>

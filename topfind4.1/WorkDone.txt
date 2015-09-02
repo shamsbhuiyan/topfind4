@@ -35,12 +35,14 @@ Things that are new and shiny
 	-Cterm listing
 	-Terminus Modification listing
 	-Terminus Modification searching (A little weird)
+	-CSV Exports for nterms and cterms
 	-Documentations
 Things started but not done
 	-Protein Pages Showing
 	-Protein Pages Filtering
+	-Terminus Pages
 	-Stylin'
-	-CSV Exports
+
 Things not started
 	-Homepage
 Things for set up

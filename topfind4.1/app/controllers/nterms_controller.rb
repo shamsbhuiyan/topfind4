@@ -54,10 +54,10 @@ class NtermsController < ApplicationController
   
   def show
      puts "id search: [#{params[:id]}]" 
-     @output = Nterm.generate_csv(params[:id])
+	  @output = Nterm.generate_csv(params[:ids])
      respond_to do |format|
        format.html
-       format.csv { send_data @output.as_csv }
+       format.csv { send_data @output}
      end
      p @output
   end

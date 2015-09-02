@@ -87,7 +87,7 @@ class Nterm < ActiveRecord::Base
 
 
   def self.generate_csv(ids)
-    CSV.generate({:col_sep => "\t"}) do |csv|
+    CSV.generate({}) do |csv|
       csv << ['topfind terminus id','position','sequence','protein (uniprot ac)','topfind evidence ids']
       ids.each do |id|
         n = Nterm.find(id)       

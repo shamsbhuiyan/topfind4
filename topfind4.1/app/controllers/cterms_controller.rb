@@ -46,8 +46,13 @@ class CtermsController < ApplicationController
   end
   
   def show
-    #protein table id is given. It will find it
-    @cterm = Cterm.find(params[:id])
+     puts "id search: [#{params[:id]}]" 
+	  @output = Cterm.generate_csv(params[:ids])
+     respond_to do |format|
+       format.html
+       format.csv { send_data @output}
+     end
+     p @output
 
   end
 end
