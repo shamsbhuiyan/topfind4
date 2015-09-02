@@ -36,7 +36,7 @@
    <%=select_tag :loc, options_for_select(["at", "before", "after"]), {prompt: "Select location"} %>
    <%= text_field_tag(:pos) %>
    <%= select_tag :modifications, options_for_select(
-Terminusmodification.includes(:kw).select{|t| !t.kw.nil?}.collect{|t| [t.kw.name, t.kw.name]}.uniq, params[:modifications]), {prompt: "Select Modifications"} %>
+Terminusmodification.includes(:kw).select{|t| !t.kw.nil?}.collect{|t| [t.kw.name, t.kw.name]}.uniq.sort_by{|e| e[0]}, params[:modifications]), {prompt: "Select Modifications"} %>
    <%= select_tag :species, options_for_select(Species.all.collect{|sp| [sp.name, sp.id]}, params[:species]), {prompt: "Select Species"} %>
    <%= label_tag(:ac, "Protein (UniProt Accession):") %>
    <%= text_field_tag(:ac) %>

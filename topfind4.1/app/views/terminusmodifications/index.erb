@@ -24,7 +24,7 @@
  <%= form_tag("index", method: "get") do %>
    
    <%= select_tag :modifications, options_for_select(
-Terminusmodification.includes(:kw).select{|t| !t.kw.nil?}.collect{|t| [t.kw.name, t.kw.name]}.uniq, params[:modifications]), {prompt: "Select Modifications"} %>
+Terminusmodification.includes(:kw).select{|t| !t.kw.nil?}.collect{|t| [t.kw.name, t.kw.name]}.uniq.sort_by{|e| e[0]}, params[:modifications]), {prompt: "Select Modifications"} %>
    <%=select_tag :type, options_for_select(["N-Termini", "C-Termini"]), {prompt: "Select Type"} %>
    <%= submit_tag("Search") %>
  <% end %>
