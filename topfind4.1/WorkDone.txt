@@ -9,6 +9,18 @@ Removed Items:
 		-golinks
 		-goprocesses
 		-schemamigrations
+	-Tables
+		-ccs
+		-delayed_jobs
+		-gn_loci
+		-gn_orf_names
+		-kws_proteins
+		-molecule
+		-moleculenames
+		-oss
+		-oss_proteins
+		-proteins_oss
+		-proteins_ocx
 	-Controllers
 		-chains
 		-cleavages (?)
