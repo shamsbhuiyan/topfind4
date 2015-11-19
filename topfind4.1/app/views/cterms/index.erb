@@ -29,17 +29,27 @@
 
  </div>
  
-  <%= form_tag("index", method: "get") do %>
-   <%= label_tag(:seq, "Sequence Search:") %>
-   <%= text_field_tag(:seq) %>
-   <%= label_tag(:pos, "Position Search:") %>
-   <%=select_tag :loc, options_for_select(["at", "before", "after"]), {prompt: "Select location"} %>
-   <%= text_field_tag(:pos) %>
-   <%= select_tag :modifications, options_for_select(
-Terminusmodification.includes(:kw).select{|t| !t.kw.nil?}.collect{|t| [t.kw.name, t.kw.name]}.uniq.sort_by{|e| e[0]}, params[:modifications]), {prompt: "Select Modifications"} %>
-   <%= select_tag :species, options_for_select(Species.all.collect{|sp| [sp.name, sp.id]}, params[:species]), {prompt: "Select Species"} %>
-   <%= label_tag(:ac, "Protein (UniProt Accession):") %>
-   <%= text_field_tag(:ac) %>
-   <%= submit_tag("Search") %>
- <% end %>
+<br></br>
+<br></br>
+<%= form_tag("index", method: "get") do %>
+	FILTERS:
+	<br></br>
+	<%= label_tag(:seq, "Sequence Search:") %> <%= text_field_tag(:seq) %>
+	<br></br>
+	<%= label_tag(:pos, "Position Search:") %> 
+	<%=select_tag :loc, options_for_select(["at", "before", "after"]), {prompt: "Select location"} %>
+	<%= text_field_tag(:pos) %>
+	<br></br>
+	<%= select_tag :modifications, options_for_select(
+	Terminusmodification.includes(:kw).select{|t| !t.kw.nil?}.collect{|t| [t.kw.name, t.kw.name]}.uniq.sort_by{|e| e[0]}, params[:modifications]), {prompt: "Select Modifications"} %>
+	<br></br>
+	<%= select_tag :species, options_for_select(Species.all.collect{|sp| [sp.name, sp.id]}, params[:species]), {prompt: "Select Species"} %>
+	<br></br>
+	<%= label_tag(:ac, "SwissProt Accession:") %><%= text_field_tag(:ac) %>
+	<br></br>
+	<%= submit_tag("Search") %>
+<% end %>
+ 
+
+
 <%= render 'footer' %>

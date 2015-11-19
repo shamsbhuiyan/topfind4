@@ -98,8 +98,7 @@ EOF
       smtp.enable_starttls
 
       smtp.start('gmail.com', 'topfind.clip@gmail.com','g3lat1na') do |smtp|
-        smtp.sendmail(mailtext, 'topfind.clip@gmail.com',
-        recipient)
+        smtp.sendmail(mailtext, 'topfind.clip@gmail.com',recipient)
       end
     rescue Exception => e  
       print "TopFIND mailer exception occured: " + e  

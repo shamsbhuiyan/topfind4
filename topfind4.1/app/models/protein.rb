@@ -38,11 +38,13 @@ include Filterable
   has_many :proteinnames, -> { uniq }, :dependent => :destroy
   has_many :searchnames, -> { uniq }, :dependent => :destroy
   #has_one :gn, :include => [:loci, :synonyms, :orf_names], :dependent => :destroy
-  has_one :gn, -> { include(:loci, :synonyms, :orf_names) }, :dependent => :destroy
+  # has_one :gn, -> { include(:loci, :synonyms, :orf_names) }, :dependent => :destroy
+  has_one :gn, :dependent => :destroy
   has_and_belongs_to_many :oss, -> { uniq },  :join_table => :oss_proteins
   has_and_belongs_to_many :ocs, -> { uniq }
   has_and_belongs_to_many :oxs, -> { uniq }, :join_table => :oxs_proteins
-  has_many :refs, -> {include(:rxs, :rgs, :rps, :rcs).uniq }, :dependent => :destroy
+  # has_many :refs, -> {include(:rxs, :rgs, :rps, :rcs).uniq }, :dependent => :destroy
+  has_many :refs, :dependent => :destroy
   has_many :ccs, -> { uniq }, :dependent => :destroy
   has_many :drs, -> { uniq }, :dependent => :destroy
   has_and_belongs_to_many :kws, -> { uniq }
@@ -352,6 +354,8 @@ class Kwsynonyme < ActiveRecord::Base
   
   belongs_to :kw
 end
+
+
 class Ft < ActiveRecord::Base
 
   belongs_to :protein

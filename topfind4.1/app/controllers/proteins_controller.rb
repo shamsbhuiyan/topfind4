@@ -12,8 +12,6 @@ class ProteinsController < ApplicationController
 
 
   def index
-    
-
     #@protein = Array.new
     puts "species: [#{params[:species]}]"
     puts "chromosome: [#{params[:chr]}]"
@@ -61,22 +59,22 @@ class ProteinsController < ApplicationController
       #check position on modifications
       if params[:modifications].present?
           ## Currently params[:modifications] can either be set to kws.id or kws.name, I need to use one of these on nterms?
-	@protein = @protein.joins(:nterms => {:terminusmodification => :kw}, :cterms => {:terminusmodification => :kw}).where("kws.name = ?", params[:modifications])
-
-	
+	        @protein = @protein.joins(:nterms => {:terminusmodification => :kw}, :cterms => {:terminusmodification => :kw}).where("kws.name = ?", params[:modifications])
       end
+      
       if params[:fun] == "Protease"
          @protein = @protein.joins(:substrates)
       elsif params[:fun] == "Inhibitor"
          @protein = @protein.joins(:inhibited_proteases)
       end
-    
+      
     #if there is no search criteria present
     else
       @protein = Protein.all.paginate(:page => params[:page], :per_page => 20)
     end
-
-
+    
+    @protein = @protein.includes(:gn, :proteinnames)
+    
 end
 
 
@@ -123,6 +121,83 @@ end
 =end
   end
   
+  
+  
+  def pathfinder
+  end
+    
+  def pathfinder_output
+    # if parameters are not well defined, return to input page
+    if(params["start"] == "" ||  params["targets"] == "" || params["maxLength"] == "")
+      render :action => 'pathfinder'
+    elsif(Protein.find_by_ac(params["start"].strip).nil?)
+      render :text => "The start protease '#{params["start"]}' could not be found, try again by clicking the BACK button."
+    else
+      # CLEAN UP INPUT
+      start = params["start"].strip
+      targets = params["targets"].split("\n").collect{|s| {:id => s.split("\s")[0], :pos => s.split("\s")[1].to_i}}
+      @maxLength = params["maxLength"].to_i
+      byPos = params["byPos"] == "yes"
+      rangeLeft = params["rangeLeft"] == "" ? 0 : params["rangeLeft"].to_i
+      rangeRight = params["rangeRight"] == "" ? 0 : params["rangeRight"].to_i
+      # ORGANISMS
+      nwOrg = params["network_org"]
+      listOrg = params["list_org"]
+      # FIND PATHS
+      finder = PathFinding.new(Graph.new(nwOrg, []), @maxLength, byPos, rangeLeft, rangeRight, true)
+      if(nwOrg == "mouse" && listOrg == "human") # nw is mouse and list is human
+        finder.find_all_paths_map2mouse(start, targets)
+      elsif(nwOrg == "human" && listOrg == "mouse")  # nw is human and list is mouse
+        finder.find_all_paths_map2human(start, targets)
+      else
+        finder.find_all_paths(start, targets)
+      end
+      p finder.get_paths()
+      finder.remove_direct_paths()
+      p finder.get_paths()
+      @allPaths = finder.get_paths()
+      @gnames = finder.paths_gene_names()                                                     # GENE NAMES FOR PROTEINS
+      #      domains_descriptions = ["%protease%inhibitor%", "%proteinase%inhibitor%", "%inhibitor%"]
+      @domains_name_filter = {"SIGNAL" => "signalpeptide", "PROPEP" => "propeptide", "ACT_SITE" => "active site", "TRANSMEM" => "TM domain"}
+      @allPaths =  finder.get_domain_info(@domains_name_filter.keys, nil)
+      @sortet_subs = @allPaths.keys.sort{|x, y| @allPaths[y].size <=> @allPaths[x].size}      # SORT OUTPUT
+      @pdfPath = finder.make_graphviz("#{Rails.root}/public/images/PathFINDer", @gnames)
+    end 
+  end
+
+  
+  def topfinder
+  end
+  
+  def topfinder_output
+    # LABEL
+    date = Time.new.strftime("%Y_%m_%d")
+    if params[:label].nil?
+      label = "TopFINDer_analysis" 
+    else
+      label = params[:label].gsub(/[^\w\d\_]/, "") # removes anything that's not a word, number or "_"
+      # label = params[:label].gsub(/\s/, '_').gsub(/\;/, '_').gsub(/\#/,"_")
+    end
+    label = label[0..30] # this is for long labels
+    label = date + "_" + label
+
+    # EMAIL TEST
+    @email = params[:email]
+    sent = false
+    begin
+      sent = Emailer.new().sendTopFINDerConfirmation(@email, label)
+    rescue Exception => e
+      p "emailing failed #{e}"
+      sent = false
+    end
+    
+    # RUN ANALYSIS
+    if sent
+      TopFINDer.new().analyze(params, label)
+    else
+      render :text => "Sending email to #{@email} failed. If it is not a valid email address, then please try again by clicking the BACK button. In case of other problems please email us at topfind.clip[at]gmail.com"
+    end
+  end
 
 
 end

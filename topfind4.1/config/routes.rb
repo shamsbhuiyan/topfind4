@@ -67,6 +67,17 @@ Rails.application.routes.draw do
   get '/proteins/show/:id', to: 'proteins#show'
   get '/proteins/filter'
   
+  # TOPFINDER
+  get '/proteins/topfinder'
+  post '/proteins/topfinder_output'
+  get 'topfinder', to: 'proteins#topfinder'
+  
+  # PATHFINDER
+  get '/proteins/pathfinder'
+  post '/proteins/pathfinder_output'
+  get 'pathfinder', to: 'proteins#pathfinder'
+
+  
   #nterm routes
   get '/nterms/index'
   #get '/nterms/show'

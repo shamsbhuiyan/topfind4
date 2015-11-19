@@ -40,6 +40,8 @@ gem 'paperclip', '4.3.0'
 #gem 'tzinfo'
 gem 'will_paginate', '3.0.7'
 gem 'filterrific', '2.0.5'
+gem 'rubystats'
+gem 'rserve-client'
 
 
 group :development, :test do

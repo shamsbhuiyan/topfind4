@@ -1,0 +1,115 @@
+<%= render 'header' %>
+
+<h2>TopFINDer</h2>
+
+<p><b>Description:</b></p>
+<p> TopFIND ExploreR retrieves general and position specific information <br></br>
+	for a list of protein termini as well as protease specific analysis tools. <br></br>
+	Submit a list of termini (UniProt accession and peptide sequence) and <br></br>
+	TopFINDer will retrieve known evidence for the termini.  <br></br> 
+</p>
+<p>More information and citation: <a href="http://nar.oxfordjournals.org/content/43/D1/D290.full" target="_blank">Fortelny et al, NAR, 2014</a> <a href="http://nar.oxfordjournals.org/content/43/D1/D290.full.pdf" target="_blank">[pdf]</a> 
+</p>
+
+<br></br><br></br>					
+
+<%= form_tag(:controller => "proteins", :action => "topfinder_output") do %>
+
+<p>
+	<b>Email address</b> for results:<br></br> 
+	<%= text_field_tag(:email)%><br></br>
+</p>
+
+<br></br>
+
+<p>
+	<b>Label</b> for your analysis 
+	<!-- <img class ='help'  src='/topfind/images/help.png' alt='?' title='This is for you to identify your analysis'/><br></br>  -->
+	(please only use up to 30 characters, numbers, and "_") <br></br>
+	<%= text_field_tag(:label)%><br></br>
+</p>
+
+<br></br>
+
+<p>
+	Is this a list of <b>N- or C-termini?</b><br></br>
+	<%= radio_button_tag :nterms, "nterms", true %> N-termini <br></br>
+	<%= radio_button_tag :nterms, "cterms" %> C-termini
+</p>
+
+<br></br>
+
+<p>
+	<b> Protein Accessions and Peptide Sequences: </b> 
+	<!-- <img class ='help'  src='/topfind/images/help.png' alt='?' title='Copy/paste tab seperated columns of UniProt protein accession (e.g. P01023) and peptide sequences (See below for supported formats).'/><br></br> -->
+	<%= text_area_tag(:all, "P06870 IVGGWECEQHS\nP0A8M0 SVVPVADVLQGR\nP07091 MMCNEFFEG\nP01019 VIHNESTCEQ\nP30990 KPRRPYIL\nP01042 SPFRSSRIGE\nP07288 ILSRIVGGWE")  %> <br></br>
+	supported peptide formats: <br></br> ENEVFLVPSR <br></br>n[145.11]ENEVFLVPSR <br></br>M.n[43.02]AGSSSLEAVR.R <br></br> (peptide sequence must be upper case!) <br></br>
+	<%= check_box_tag(:IleLeu, "1", false)%> I=L 
+	<!-- <img class ='help'  src='/topfind/images/help.png' alt='?' title='If checked, TopFINDer does not distinguish between Ile and Leu when mapping peptide to protein sequences.'/> <br></br> -->
+	<%= check_box_tag(:glx, "1", false)%> Z=Q 
+	<!-- <img class ='help'  src='/topfind/images/help.png' alt='?' title='If checked, TopFINDer maps all Zs (Glx) to Qs (Gln) when mapping peptide to protein sequences.'/> <br></br> -->
+	<%= check_box_tag(:asx, "1", false)%> B=N 
+	<!-- <img class ='help'  src='/topfind/images/help.png' alt='?' title='If checked, TopFINDer maps all Bs (Asx) to Ns (Asn) when mapping peptide to protein sequences.'/> <br></br> -->
+</p>
+
+<br></br>
+
+<br></br>
+
+<p><b>Positional precision</b> 
+	<!-- <img class ='help'  src='/topfind/images/help.png' alt='?' title='To account for small truncations of termini ("ragging"), TopFINDer will look for terminus evidences downstream and upstream of your terminus if you indicate it here. If you only want information at the precise position of the terminus then enter 0 into both fields.'/><br></br> -->
+	<div class="pathfinder_box">
+	<b>N-terminal</b>: <%= text_field_tag(:nterminal, "3", :size=>2, :maxlength=>2)  %> <br></br>
+	<b>C-Terminal</b>: <%= text_field_tag(:cterminal, "3", :size=>2, :maxlength=>2)  %> <br></br>
+	</div>
+</p>	
+
+<br></br>
+<p><b>Annotation:</b> 
+	<!-- <img class ='help'  src='/topfind/images/help.png' alt='?' title='Information in the TopFIND databases that can be retrieved'/><br></br> -->
+	<div class="pathfinder_box">
+	<%= check_box_tag(:spec, "1", true)%> Species <br></br>
+	<%= check_box_tag(:chromosome, "1", true)%> Chromosome location<br></br>
+	<%= check_box_tag(:domain, "1", true)%> Domains <br></br>
+	<%= check_box_tag(:evidence, "1", true)%> Evidence <br></br>
+	</div>
+</p>
+
+<br></br>
+ 
+<p><b>Analyses:</b> 
+	<!-- <img class ='help'  src='/topfind/images/help.png' alt='?' title='These analyses will be run on your submitted data.'/><br></br> -->
+
+
+	<div class="pathfinder_box">
+	  <%= check_box_tag(:stats, "1", true)%> <b>Protease enrichment</b> 
+	  <!-- <img class ='help'  src='/topfind/images/help.png' alt='?' title='This will report count and enrichment statistics of proteases that cleave the proteins in your list.'/> <br></br> -->
+	</div>
+	<div class="pathfinder_box">
+	  <%= check_box_tag(:proteaseWeb, "1", false)%> <b>Protease web</b> 
+	  <!-- <img class ='help'  src='/topfind/images/help.png' alt='?' title='This program find paths (multi-step connections) in the protease web from a given protease to all submitted substrates. Please indicate the protease you are interested in (UniProt accession, e.g. P01023). The maximal path length is the maximum number of steps any path can have.'/> <br></br> -->
+	  protease: <%= text_field_tag(:pw_protease, "P14091", :size=>10, :maxlength=>10)  %>
+	  <!-- <img class ='help'  src='/topfind/images/help.png' alt='?' title='The protease which will be the start of all identified paths.'/> -->
+	  <br></br>
+	  maximum path length (max: 4) <%= text_field_tag(:pw_maxPathLength, "4", :size=>2, :maxlength=>2)  %> 
+	  <!-- <img class ='help'  src='/topfind/images/help.png' alt='?' title='Determines how long the paths in the web can be. Pathfinding is a computationally expensive process for long paths. Please use your TopFINDer output in the PathFINDer tool from the top menu, if you would like to experiment with pathfinding.'/> -->
+	  <br></br>
+	  organism: 
+	  <%= radio_button_tag :pw_org, "human", true %> human
+	  <%= radio_button_tag :pw_org, "mouse" %> mouse
+	
+	</div>
+</p>
+
+<br></br>
+
+
+
+<br></br>
+
+<%= submit_tag("Get information") %>
+<%end%>
+
+<br></br>
+	
+<%= render 'footer' %>

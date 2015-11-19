@@ -11,10 +11,10 @@ class TopFINDer
     require 'listTools/venn'
     require 'listTools/emailer'
     
-    system("Rscript #{RAILS_ROOT}/Rserve_Startup.R")
+    system("Rscript #{Rails.root}/Rserve_Startup.R")
     
-    nr = Dir.entries("#{RAILS_ROOT}/public/explorer").collect{|x| x.to_i}.max + 1
-    dir = "#{RAILS_ROOT}/public/explorer/" + nr.to_s 
+    nr = Dir.entries("#{Rails.root}/public/explorer").collect{|x| x.to_i}.max + 1
+    dir = "#{Rails.root}/public/explorer/" + nr.to_s 
     Dir.mkdir(dir)
     fileDir = dir + "/#{label}"
     Dir.mkdir(fileDir)
@@ -53,10 +53,8 @@ class TopFINDer
         #@q[:pep] = i.split("\s").fetch(1).gsub(/[^[:upper:]]+/, "")
         @q[:pep] = iSplit.fetch(1).gsub(/^.{1}\./,"").gsub(/\..{1}$/,"").gsub(/[^[:upper:]]+/, "")
         @q[:full_pep] = iSplit.fetch(1)
-        @q[:protein] = if Protein.find(:first, :conditions => ["ac = ?", @q[:acc]]) != nil
-          Protein.find(:first, :conditions => ["ac = ?", @q[:acc]])
-        else
-        end
+        prot = Protein.find_by_ac(@q[:acc])
+        @q[:protein] = prot if not prot.nil?
       end
       
       # get location if protein is found
@@ -107,15 +105,15 @@ class TopFINDer
       @q[:species] = @q[:protein].species.common_name
       
       @q[:sql_id] = @q[:protein].id
-      @q[:all_names] = Searchname.find(:all, :conditions => ['protein_id = ?', @q[:sql_id]]).uniq      
+      @q[:all_names] = @q[:protein].searchnames.all.uniq      
       
       # NTERMINI AND EVIDENCES
       if @nterms
-        @q[:termini] = Nterm.find(:all, :conditions => ["protein_id = ?", @q[:sql_id]]).select{|n| @q[:location_N_range].include? n.pos}
-        @q[:evidences] =  @q[:termini].collect {|b| Nterm2evidence.find(:all, :conditions => ['nterm_id = ?', b.id])}.flatten.collect{|n2e| n2e.evidence}
+        @q[:termini] = Nterm.where("protein_id = ? and pos IN (?)", @q[:sql_id], @q[:location_N_range]).to_a
+        @q[:evidences] =  @q[:termini].collect {|b| b.evidences}.flatten
       else
-        @q[:termini] = Cterm.find(:all, :conditions => ["protein_id = ?", @q[:sql_id]]).select{|n| @q[:location_C_range].include? n.pos}
-        @q[:evidences] =  @q[:termini].collect {|b| Cterm2evidence.find(:all, :conditions => ['cterm_id = ?', b.id])}.flatten.collect{|n2e| n2e.evidence}
+        @q[:termini] = Cterm.where("protein_id = ? and pos IN (?)", @q[:sql_id], @q[:location_C_range]).to_a
+        @q[:evidences] =  @q[:termini].collect {|b| b.evidences}.flatten
       end
       @q[:evidences] = @q[:evidences].select{|e| !e.nil?}      
       @q[:uniprot] =[]
@@ -145,7 +143,7 @@ class TopFINDer
       }
             
       # CLEAVAGES
-      @q[:cleavages] = Cleavage.find(:all, :conditions => ["substrate_id = ?", @q[:sql_id]])
+      @q[:cleavages] = Cleavage.where("substrate_id = ?", @q[:sql_id]).to_a
       
       if not @q[:cleavages].nil?
         @q[:cleavages] = @q[:cleavages].select{|c| @q[:location_C_range].include? c.pos}
@@ -155,7 +153,7 @@ class TopFINDer
       end
       
       # DOMAINS
-      @q[:domains_all] = Ft.find(:all, :conditions => ['protein_id = ?', @q[:sql_id]])
+      @q[:domains_all] = Ft.where('protein_id = ?', @q[:sql_id]).to_a
       @q[:domains_all] = @q[:domains_all].select{|d| !["HELIX", "STRAND", "TURN", "CONFLICT", "VARIANT", "VAR_SEQ"].include? d.name} # FILTER OUT SOME UNINFORMATIVE ONES
       @q[:domains_before] = @q[:domains_all].select {|a| a.to.to_i <= @q[:location_C]}
       @q[:domains_after] = @q[:domains_all].select {|a| a.from.to_i >= @q[:location_C] + 1 }
@@ -204,14 +202,14 @@ class TopFINDer
     begin
       IceLogo.new().terminusIcelogo(Species.find(1), seqs.collect{|e| e[:upstream]+":"+e[:downstream]}, "#{fileDir}/IceLogo.svg", 4) if seqs.length > 0
     rescue Exception => e
-      print "Exception occured making Ice Logo " + e
+      print "Exception occured making Ice Logo #{e.to_s}"
     end
   
     # VENN DIAGRAM
     begin
       Venn.new(@foundPeptides).vennDiagram("#{fileDir}/VennDiagram")
     rescue Exception => e  
-      print "Exception occured making Venn Diagram: " + e 
+      print "Exception occured making Venn Diagram: #{e.to_s}"
     end
 
 	print "starting pathfinding\n"
@@ -247,12 +245,12 @@ class TopFINDer
         begin
           es.plotProteaseCounts("#{fileDir}/Protease_histogram")
         rescue Exception => e
-          print "Exception occured making Protease Histogram: " + e
+          print "Exception occured making Protease Histogram:  #{e.to_s}"
         end
         begin
           es.plotProteaseSubstrateHeatmap("#{fileDir}/ProteaseSubstrate_matrix")
         rescue Exception => e
-          print "Exception occured making Protease Heatmap: " + e
+          print "Exception occured making Protease Heatmap:  #{e.to_s}"
         end
       end
     end

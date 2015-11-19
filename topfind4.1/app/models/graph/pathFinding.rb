@@ -128,8 +128,8 @@ class PathFinding
     path_proteins.each{|p| 
       f = []
       feats = Protein.find_by_ac(p).fts
-      f.concat(feats.find_all_by_name(domains_names_filter)) if not domains_names_filter.nil?
-      f.concat(feats.find(:all, :conditions => [Array.new(domains_descriptions_filter.length, "description LIKE ?").join(" OR "), domains_descriptions_filter].flatten)) if not domains_descriptions_filter.nil?
+      f.concat(feats.where("name IN (?)", domains_names_filter)) if not domains_names_filter.nil?
+      # f.concat(feats.find(:all, :conditions => [Array.new(domains_descriptions_filter.length, "description LIKE ?").join(" OR "), domains_descriptions_filter].flatten)) if not domains_descriptions_filter.nil?
       fts_hash[p] = f
     }
     
