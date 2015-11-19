@@ -11,3 +11,7 @@
 /log/*
 !/log/.keep
 /tmp
+
+# TOPFIND SPECIFIC FILES
+config/database.yml
+config/secrets.yml 
