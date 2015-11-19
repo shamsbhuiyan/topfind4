@@ -7,17 +7,23 @@ Things you may want to cover:
 
 * Ruby version 
 - 2.2.3
-- for gems just run bundle install (or update?)
+- to add the right gems, just run bundle install (or update?)
 
 * System dependencies
+- topfind needs R installed
+- topfind also needs graphviz installed
+- both of those should be in the environmental variables
 
 * Configuration
 
 * Database creation
+- download the mysql dump from clipserve.ubc.ca/topfind
 
 * Database initialization
+- modify the config/database.yml file
 
 * How to run the test suite
+- SHAMS - how does this work? do you need an empty db to start with?
 
 * Services (job queues, cache servers, search engines, etc.)
 
