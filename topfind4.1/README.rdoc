@@ -1,9 +1,4 @@
-= README
-
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
+= TopFIND4.1 README
 
 === INSTALLATION:
 
@@ -30,7 +25,9 @@ Things you may want to cover:
 
 ====== Deployment instructions
 
-====== TODO
+
+
+=== TODO
 * CSV exports for proteins, nterms, cterms?
 * protein pages (show)
 * user handling
