@@ -15,3 +15,7 @@
 # TOPFIND SPECIFIC FILES
 config/database.yml
 config/secrets.yml 
+
+# R files
+.Rhistory
+
