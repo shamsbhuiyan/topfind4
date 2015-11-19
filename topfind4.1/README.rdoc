@@ -1,43 +1,43 @@
-== README
+= README
 
 This README would normally document whatever steps are necessary to get the
 application up and running.
 
 Things you may want to cover:
 
-==== INSTALLATION:
+=== INSTALLATION:
 
-* Ruby version 
-** 2.2.3
-** to add the right gems, just run bundle install (or update?)
+======  Ruby version 
+* 2.2.3
+* to add the right gems, just run bundle install (or update?)
 
-* System dependencies
-** topfind needs R installed (uses rserve-client gem to talk to it)
-** topfind also needs graphviz installed (make sure it's in the PATH, i.e. "dot" is available from command line)
+====== System dependencies
+* topfind needs R installed (uses rserve-client gem to talk to it)
+* topfind also needs graphviz installed (make sure it's in the PATH, i.e. "dot" is available from command line)
 
-* Configuration
+====== Configuration
 
-* Database creation
-** download the mysql dump from clipserve.ubc.ca/topfind
+====== Database creation
+* download the mysql dump from clipserve.ubc.ca/topfind
 
-* Database initialization
-** modify the config/database.yml file
+====== Database initialization
+* modify the config/database.yml file
 
-* How to run the test suite
-** SHAMS ** how does this work? do you need an empty db to start with?
+====== How to run the test suite
+* SHAMS * how does this work? do you need an empty db to start with?
 
-* Services (job queues, cache servers, search engines, etc.)
+====== Services (job queues, cache servers, search engines, etc.)
 
-* Deployment instructions
+====== Deployment instructions
 
-* TODO
-** CSV exports for proteins, nterms, cterms?
-** protein pages (show)
-** user handling
-** imports
-** general esthetics
-** delayed_jobs for TopFINDer
-** ? symbols for TopFINDer and PathFINDer (and elsehwere?)
+====== TODO
+* CSV exports for proteins, nterms, cterms?
+* protein pages (show)
+* user handling
+* imports
+* general esthetics
+* delayed_jobs for TopFINDer
+* ? symbols for TopFINDer and PathFINDer (and elsehwere?)
 
 
 
