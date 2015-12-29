@@ -1,0 +1,8 @@
+<%= render 'header' %>
+
+<center>
+<%= form_tag({:controller => "proteins", :action => "index"}, :method => "get") do %>
+  <%= label_tag(:query, "Search:") %>
+  <%= text_field_tag(:query, nil, size: 50 , placeholder: 'Name, Uniprot ID, MEROPS Family ID...') %>
+<% end %> </center>
+<%= render 'footer' %>

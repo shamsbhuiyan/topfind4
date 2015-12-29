@@ -24,7 +24,7 @@
  </ul>
 <% end %>
  <div>
-<%#= link_to "Export to CSV", {:method=> "show", :id => @nterm.map {|i| i.id }} %>
+<%#= link_to "Export to CSV", {:method=> "show", :id => @cterm.map {|i| i.id }} %>
 <%= link_to "Export to CSV", cterms_export_path(:format => :csv, :ids => @cterm.map {|i| i.id }) %>
 
  </div>

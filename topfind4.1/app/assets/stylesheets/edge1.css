@@ -13,7 +13,7 @@ html, body {color: #193440; background: #fff;}
 
 .page-header h1 {
   margin: 0; padding: 15px 30px 5px; 
-  font-family: 'Bakersville'; font-size: 36px; letter-spacing: -1.0pt;
+  font-family: 'Bakersville'; font-size: 42px; letter-spacing: -1.0pt;
 }
 
 .app-name a, .app-name a:hover {
@@ -106,7 +106,7 @@ border-radius: 3px;
   -moz-box-shadow: 5px 5px 5px #333;
   -webkit-box-shadow: 5px 5px 5px #333;
   box-shadow: 5px 5px 5px #333;
-background: white;
+background: black;
 float:left;
 }
 

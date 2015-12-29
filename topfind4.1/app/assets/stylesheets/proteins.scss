@@ -214,11 +214,11 @@ a {
 }
 a:hover {
   border-bottom: 1px dotted black;
-  color: black;
+  color: #FFD700;
   text-decoration: none; 
 }
 
-h1 a, h2 a, h3 a {border: none; background: none; color: white; border-bottom: 1px dotted white;}
+h1 a, h2 a, h3 a {border: none; background: none; color: #FFD700; border-bottom: 1px dotted white;}
 
 pre, code {
     font-family:  "Courier New", Courier, monospace;

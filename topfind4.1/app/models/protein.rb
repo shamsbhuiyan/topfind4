@@ -26,6 +26,7 @@ include Filterable
       t.enum   :status['created','pruned','updated','unknown'], :default => 'unknown'
       t.timestamps
     end
+
   end
 
   def to_param

@@ -54,6 +54,9 @@ Rails.application.routes.draw do
   #     resources :products
   #   end
 
+  #homepage route
+  get 'home/index'
+  
   #documentations routes
   get 'documentations/license'
   get 'documentations/about'
