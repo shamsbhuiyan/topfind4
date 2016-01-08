@@ -50,12 +50,52 @@
 	</section> 	  
 	
 <section class="full category">
-              
             </section>
-	            <section class="full category">
+	        <section class="full category">
               <pagenav/>
               <a name="features"/><h2>Domains &amp; Features</h2>
-            </section><section class="full">
+            </section>
+			
+<!-- N-TERMINI  -->
+	        <section class="full category">
+              <pagenav/>
+              <a name="features"/><h2>N-termini</h2>
+			  <table>
+				<thead>
+					<th>Sequence</th>
+					<th>Position</th>
+					<th>Evidence type</th>
+					<th>Method</th>
+					<th>Source (database)</th>
+					<th>Source (Lab)</th>
+					<th>Name</th>
+					<th>Publication</th>
+				</thead>
+				<tbody>
+					<% @protein.nterms.sort{|x, y| x.pos <=> y.pos}.each do |c| %>
+					<% c.terminusmodification.kw.name == 'unknown' ? mod = '' : mod = "#{c.terminusmodification.kw.name.downcase}-"%> 
+				    <% sequ = "<sup>#{mod}#{c.pos}</sup>#{@protein.sequence[c.pos-1,1]}#{@protein.sequence[c.pos..c.pos+4]}..."%>
+						<% c.evidences.each do |e| %>							
+							<tr>
+							<td><%= sequ %></td>
+							<td><%= c.pos %></td>
+							<td><%= e.evidencecodes.collect{|x| x.name}.join(", ") %></td>
+							<td><%= e.methodology %></td>
+							<td><%= e.evidencesource.dbname if e.evidencesource %></td>
+							<td><%= e.lab %></td>
+							<td><%= e.name %> TODO LINK</td>
+							<td><%= e.publications.collect{|x| x.ref}.join("\n") %> TODO LINK</td>
+							</tr>
+						<% end %>
+					<% end %>
+				</tbody>
+			  </table>
+            </section>
+			
+			
+			
+			
+			<section class="full">
               <%=@simplepanel%>
             </section>
 	
