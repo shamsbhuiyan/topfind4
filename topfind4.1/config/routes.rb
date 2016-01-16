@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
@@ -68,6 +69,7 @@ Rails.application.routes.draw do
   get '/proteins/index'
   get '/proteins/show'
   get '/proteins/show/:id', to: 'proteins#show'
+  post '/proteins/show/:id', to: 'proteins#show'
   get '/proteins/filter'
   
   # TOPFINDER
@@ -80,7 +82,6 @@ Rails.application.routes.draw do
   post '/proteins/pathfinder_output'
   get 'pathfinder', to: 'proteins#pathfinder'
 
-  
   #nterm routes
   get '/nterms/index'
   #get '/nterms/show'
@@ -96,4 +97,8 @@ Rails.application.routes.draw do
   #terminus modification
   get '/terminusmodifications/index'
   get '/terminusmodifications/show'
+  
+  # evidences
+  get '/evidences/show/:id', to: 'evidences#show'
+  
 end

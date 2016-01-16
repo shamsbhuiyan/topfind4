@@ -31,12 +31,18 @@ Things you may want to cover:
 ====== Deployment instructions
 
 ====== TODO
-* CSV exports for proteins, nterms, cterms?
+* INVERSE CLEAVAGES
+* evidences/show/70099 --> fix views
+* this throws an error: "Evidence.find(70099).inhibitions"
+* EXPORT for n-terms, c-terms, and cleavages in ProteinPages
+* Evidence source (DB) in protein page n- and c-termini link back to the old topfind
+
+* link evidences back to their n- and c-termini? And cleavages and inhibitions?
+* CSV exports for protein list (index)
 * protein pages (show)
 * user handling
 * imports
 * general esthetics
-* delayed_jobs for TopFINDer
 * ? symbols for TopFINDer and PathFINDer (and elsehwere?)
 
 

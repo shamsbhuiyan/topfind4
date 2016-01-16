@@ -1,0 +1,85 @@
+<%= render 'header' %>
+<def tag='evidence-summary'>
+	<section class="left">
+	  <section class="block">
+	      <table class="evidencetable">
+	        <tr>
+	          <th>Description</th>
+	          <td><%= @evidence.description %></td>
+	        </tr>
+			<!-- <tr> # THIS COULD BE COOL TO ADD BUT NEEDS NEW STUFF
+	        <th>Evidence for</th>
+	          <td><%= @evidence.nterms.length %> N-termini and <%= @evidence.cterms.length %> C-termini</td>
+	        </tr> -->
+	        <tr>
+	          <th>Method</th>
+	          <td> <%= @evidence.method %></td>
+	        </tr>
+	        <tr>
+	          <th>Experimental system</th>
+	          <td><%= @evidence.method_system %></td>
+	        </tr>
+	        <tr>
+	          <th>Perturbation</th>
+	          <td><%= @evidence.method_perturbation %></td>
+	        </tr>
+	        <tr>
+	          <th>Protease inhibitors used</th>
+	          <td><%= @evidence.protease_inhibitors_used %></td>
+	        </tr>
+	        <tr>
+	          <th>Directness</th>
+	          <td><%= @evidence.directness %></td>
+	        </tr>
+	        <tr>
+	          <th>Physiological relevance</th>
+	          <td><%= @evidence.phys_relevance %></td>
+	        </tr>
+	        <tr>
+	          <th>Evidencecodes</th>
+	          <td><ul>
+				  <% @evidence.evidencecodes.each do |e| %>
+   			   		<li><%= e.name%></li>
+				  <%end %>
+			  </ul></td>
+	        </tr>
+	        <tr>
+	          <th>Database / Laboratory</th>
+	          <td>
+				<ul>
+					<% if @evidence.lab %> <li> Lab: <%= @evidence.lab %></li> <% end %>
+					<% if @evidence.evidencesource %> 
+						<li> DB: <%= link_to @evidence.evidencesource.dbname, @evidence.evidencesource.dburl, :target => "_blank" %> </li>
+					<% end %>
+	          	</ul>
+		  	  </td>
+	        </tr>
+	        <tr>
+	          <th>Raw data repository</th>
+			  <td>
+				  <% if @evidence.repository and not @evidence.repository == "" %>
+				  	<%= link_to @evidence.repository, @evidence.repository, :target => "_blank" %>
+			  	  <% end %>
+		  	  </td>
+	        </tr>
+	        <tr>
+	          <th>Publications</th>
+	          <td>
+				  <% if @evidence.publications.length > 0 %>
+				  	<% @evidence.publications.each do |p| %>
+			        	<%= p.title %></p>
+						<%= p.authors %></p>
+						<% if not p.url == ""%>
+							<%= link_to p.ref, p.url, :target => "_blank" %>
+							<% else %>
+							<%= p.ref %>
+						<% end %>
+						PMID: <%= link_to p.pmid, "http://www.ncbi.nlm.nih.gov/pubmed/#{p.pmid}", :target => "_blank" %>
+					<% end %>
+				  <% end %>
+			  </td>
+	        </tr>
+	      </table>
+	  </section>             
+	</section>
+<%= render 'footer' %>

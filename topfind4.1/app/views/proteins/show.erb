@@ -1,4 +1,61 @@
 <%= render 'header' %>
+
+<def tag="protein-filter">
+  <div class="filter box">
+    <div class="box-header">
+      Filter:
+    </div>   
+    <div class="box-content"> 
+			<%= form_tag(:controller => 'proteins', :action => 'show', id: @protein.ac) do %>
+				FILTERS:
+				<br></br>
+				DIRECTNESS
+				<%= select_tag :directness, options_for_select(
+					@evidence.collect{|e| e.directness}.uniq, params[:directness]), 
+					{:multiple => true} %>
+				PHYSIOLOGICAL RELEVANCE
+				<%= select_tag :phys_rel, options_for_select(
+					@evidence.collect{|e| e.phys_relevance}.uniq, params[:phys_rel]), 
+					{:multiple => true} %>
+				EVIDENCECODES
+				<%= select_tag :evidencecodes, options_for_select(
+					@evidence.collect{|e| e.evidencecodes.collect{|x| x.name}}.flatten.uniq, params[:evidencecodes]), 
+					{:multiple => true} %>
+				METHODOLOGY
+				<%= select_tag :methodology, options_for_select(
+					@evidence.collect{|e| e.methodology}.uniq, params[:methodology]), 
+					{:multiple => true} %>
+				PERTURBATION OF SYSTEM
+				<%= select_tag :perturbations, options_for_select(
+					@evidence.collect{|e| e.method_perturbation}.uniq, params[:perturbations]), 
+					{:multiple => true} %>
+				BIOLOGICAL SYSTEM
+				<%= select_tag :methodsystems, options_for_select(
+					@evidence.collect{|e| e.method_system}.uniq, params[:methodsystems]), 
+					{:multiple => true} %>
+				PROTEASE ASSIGNMENT CONFIDENCE
+				<%= select_tag :proteaseassignmentconfidences, options_for_select(
+					@evidence.collect{|e| e.proteaseassignment_confidence}.uniq, params[:proteaseassignmentconfidences]), 
+					{:multiple => true} %>
+				EVIDENCE NAMES
+				<%= select_tag :evidences, options_for_select(
+					@evidence.collect{|e| e.name}.uniq, params[:evidences]), 
+					{:multiple => true} %>
+				DATABASE
+				<%= select_tag :repository, options_for_select(
+					@evidence.collect{|e| e.repository}.uniq, params[:repository]), 
+					{:multiple => true} %>
+				LAB
+				<%= select_tag :labs, options_for_select(
+					@evidence.collect{|e| e.lab}.uniq, params[:labs]), 
+					{:multiple => true} %>
+				<%= submit_tag("Search") %>
+			<% end %>
+        
+    </div>   
+  </div>
+</def> 
+
 <def tag='general-protein-information'>
 	<section class="left">
 	  <section class="block">
@@ -68,8 +125,8 @@
 					<th>Method</th>
 					<th>Source (database)</th>
 					<th>Source (Lab)</th>
-					<th>Name</th>
-					<th>Publication</th>
+					<th>Evidence name</th>
+					<th>Publications (PMID)</th>
 				</thead>
 				<tbody>
 					<% @protein.nterms.sort{|x, y| x.pos <=> y.pos}.each do |c| %>
@@ -81,10 +138,14 @@
 							<td><%= c.pos %></td>
 							<td><%= e.evidencecodes.collect{|x| x.name}.join(", ") %></td>
 							<td><%= e.methodology %></td>
-							<td><%= e.evidencesource.dbname if e.evidencesource %></td>
+							<td><%= link_to e.evidencesource.dbname, e.evidencesource.dburl, :target => "_blank" if e.evidencesource %>
 							<td><%= e.lab %></td>
-							<td><%= e.name %> TODO LINK</td>
-							<td><%= e.publications.collect{|x| x.ref}.join("\n") %> TODO LINK</td>
+							<td><%= link_to e.name, {:controller => 'evidences', :action => 'show', :id => e.id} %></td>
+							<td>
+								<% e.publications.each do |x| %>
+								<%= link_to x.pmid, "http://www.ncbi.nlm.nih.gov/pubmed/#{x.pmid}", :target => "_blank" %>,
+								<% end %>
+							</td>
 							</tr>
 						<% end %>
 					<% end %>
@@ -92,7 +153,86 @@
 			  </table>
             </section>
 			
-			
+<!-- C-TERMINI  -->
+	        <section class="full category">
+              <pagenav/>
+              <a name="features"/><h2>C-termini</h2>
+			  <table>
+				<thead>
+					<th>Sequence</th>
+					<th>Position</th>
+					<th>Evidence type</th>
+					<th>Method</th>
+					<th>Source (database)</th>
+					<th>Source (Lab)</th>
+					<th>Evidence name</th>
+					<th>Publications (PMIDs)</th>
+				</thead>
+				<tbody>
+					<% @protein.cterms.sort{|x, y| x.pos <=> y.pos}.each do |c| %>
+					<% c.terminusmodification.kw.name == 'unknown' ? mod = '' : mod = "#{c.terminusmodification.kw.name.downcase}-"%> 
+				    <% sequ = "...#{@protein.sequence[c.pos-5..c.pos]}<sup>#{mod}#{c.pos}</sup>"%>
+						<% c.evidences.each do |e| %>
+							<tr>
+							<td><%= sequ %></td>
+							<td><%= c.pos %></td>
+							<td><%= e.evidencecodes.collect{|x| x.name}.join(", ") %></td>
+							<td><%= e.methodology %></td>
+							<td><%= link_to e.evidencesource.dbname, e.evidencesource.dburl, :target => "_blank" if e.evidencesource %>
+							<td><%= e.lab %></td>
+							<td><%= link_to e.name, {:controller => 'evidences', :action => 'show', :id => e.id} %></td>
+							<td>
+								<% e.publications.each do |x| %>
+								<%= link_to x.pmid, "http://www.ncbi.nlm.nih.gov/pubmed/#{x.pmid}", :target => "_blank" %>,
+								<% end %>
+							</td>
+							</tr>
+						<% end %>
+					<% end %>
+				</tbody>
+			  </table>
+            </section>
+
+<!-- SUBSTRATES -->
+	        <section class="full category">
+              <pagenav/>
+              <a name="features"/><h2>Substrates</h2>
+			  <table>
+				<thead>
+					<th>Substrate</th>
+					<th>Position</th>
+					<th>Sequence</th>
+					<th>Evidence type</th>
+					<th>Method</th>
+					<th>Source (database)</th>
+					<th>Source (Lab)</th>
+					<th>Evidence name</th>
+					<th>Publications (PMIDs)</th>
+				</thead>
+				<tbody>
+					<% @protein.cleavages.sort{|x, y| x.pos <=> y.pos}.each do |c| %>
+				    <% sequ = "#{c.substrate.sequence[c.pos-3..c.pos]}.|.#{c.substrate.sequence[c.pos..c.pos+3]}"%>
+						<% c.evidences.each do |e| %>
+							<tr>
+							<td><%= link_to c.substrate.recname, {:action => 'show', :id => c.substrate.ac} %></td>
+							<td><%= c.pos%></td>
+							<td><%= sequ %></td>
+							<td><%= e.evidencecodes.collect{|x| x.name}.join(", ") %></td>
+							<td><%= e.methodology %></td>
+							<td><%= link_to e.evidencesource.dbname, e.evidencesource.dburl, :target => "_blank" if e.evidencesource %>
+							<td><%= e.lab %></td>
+							<td><%= link_to e.name, {:controller => 'evidences', :action => 'show', :id => e.id} %></td>
+							<td>
+								<% e.publications.each do |x| %>
+								<%= link_to x.pmid, "http://www.ncbi.nlm.nih.gov/pubmed/#{x.pmid}", :target => "_blank" %>,
+								<% end %>
+							</td>
+							</tr>
+						<% end %>
+					<% end %>
+				</tbody>
+			  </table>
+            </section>
 			
 			
 			<section class="full">
@@ -103,4 +243,4 @@
 
 <%= link_to 'Back', {:action => 'index'} %>
 
-  <%= render 'footer' %>
+<%= render 'footer' %>

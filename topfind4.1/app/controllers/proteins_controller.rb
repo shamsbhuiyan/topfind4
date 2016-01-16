@@ -81,9 +81,37 @@ end
 
   
   def show
-    #protein table id is given. It will find it
-    @protein = Protein.find(params[:id])
-=begin     
+    #protein AC is given from the table. This will find it
+    @protein = Protein.find_by_ac(params[:id])
+    p @protein.ac
+    
+    # GET all evidences for this protein
+    @evidence = Evidence.all
+    
+    # params[:ppi].present? ? @ppi = params[:ppi] : @ppi = false
+    params[:phys_rel] = ["direct"]
+    #filter:
+    
+    @evidence = @evidence.where(directness: params[:directness]) if params[:directness].present?
+    @evidence = @evidence.where(phys_relevance: params[:phys_rel]) if params[:phys_rel].present?
+    @evidence = @evidence.joins(:evidencecodes).where(evidencecodes: { name: params[:evidencecodes]}) if params[:evidencecodes].present?    
+    @evidence = @evidence.where(methodology: params[:methodology]) if params[:methodology].present?
+    @evidence = @evidence.where(method_perturbation: params[:perturbations]) if params[:perturbations].present?
+    @evidence = @evidence.where(method_system: params[:methodsystems]) if params[:methodsystems].present?
+    @evidence = @evidence.where(proteaseassignment_confidence: params[:proteaseassignmentconfidences]) if params[:proteaseassignmentconfidences].present?
+    @evidence = @evidence.where(name: params[:evidences]) if params[:evidences].present?                    
+    @evidence = @evidence.where(repository: params[:repository]) if params[:repository].present?
+    @evidence = @evidence.where(lab: params[:labs]) if params[:labs].present?                    
+    
+    @evidence = @evidence.joins(:nterms).where(nterms: { protein_id: @protein.id}) | 
+    Evidence.joins(:cterms).where(cterms: { protein_id: @protein.id}) | 
+    Evidence.joins(:cleavages).where("cleavages.protease_id =? OR cleavages.substrate_id =?", @protein.id, @protein.id)
+    
+=begin
+    @evidence = @evidence.where(method_protease_source: params[:methodproteasesources]) if params[:methodproteasesources].present?     
+=end
+    
+=begin
     @annotations_main = @protein.ccs.main
     @annotations_additional = @protein.ccs.additional
     @documentations = Documentation.all.group_by(&:name)

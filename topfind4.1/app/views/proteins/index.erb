@@ -13,7 +13,7 @@
  <tbody>
  <% @protein.each do |c| %>
  <tr>	   
- <td><%= link_to c.ac, {:action => 'show', :id => c.id} %></td>
+ <td><%= link_to c.ac, {:action => 'show', :id => c.ac} %></td>
  <td><%= c.gn.name %></td>
  <td><%= c.recname %></td>
  </tr> 
