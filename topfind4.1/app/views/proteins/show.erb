@@ -11,43 +11,43 @@
 				<br></br>
 				DIRECTNESS
 				<%= select_tag :directness, options_for_select(
-					@evidence.collect{|e| e.directness}.uniq, params[:directness]), 
+					@all_evidence.collect{|e| e.directness}.uniq, params[:directness]), 
 					{:multiple => true} %>
 				PHYSIOLOGICAL RELEVANCE
 				<%= select_tag :phys_rel, options_for_select(
-					@evidence.collect{|e| e.phys_relevance}.uniq, params[:phys_rel]), 
+					@all_evidence.collect{|e| e.phys_relevance}.uniq, params[:phys_rel]), 
 					{:multiple => true} %>
 				EVIDENCECODES
 				<%= select_tag :evidencecodes, options_for_select(
-					@evidence.collect{|e| e.evidencecodes.collect{|x| x.name}}.flatten.uniq, params[:evidencecodes]), 
+					@all_evidence.collect{|e| e.evidencecodes.collect{|x| x.name}}.flatten.uniq, params[:evidencecodes]), 
 					{:multiple => true} %>
 				METHODOLOGY
 				<%= select_tag :methodology, options_for_select(
-					@evidence.collect{|e| e.methodology}.uniq, params[:methodology]), 
+					@all_evidence.collect{|e| e.methodology}.uniq, params[:methodology]), 
 					{:multiple => true} %>
 				PERTURBATION OF SYSTEM
 				<%= select_tag :perturbations, options_for_select(
-					@evidence.collect{|e| e.method_perturbation}.uniq, params[:perturbations]), 
+					@all_evidence.collect{|e| e.method_perturbation}.uniq, params[:perturbations]), 
 					{:multiple => true} %>
 				BIOLOGICAL SYSTEM
 				<%= select_tag :methodsystems, options_for_select(
-					@evidence.collect{|e| e.method_system}.uniq, params[:methodsystems]), 
+					@all_evidence.collect{|e| e.method_system}.uniq, params[:methodsystems]), 
 					{:multiple => true} %>
 				PROTEASE ASSIGNMENT CONFIDENCE
 				<%= select_tag :proteaseassignmentconfidences, options_for_select(
-					@evidence.collect{|e| e.proteaseassignment_confidence}.uniq, params[:proteaseassignmentconfidences]), 
+					@all_evidence.collect{|e| e.proteaseassignment_confidence}.uniq, params[:proteaseassignmentconfidences]), 
 					{:multiple => true} %>
 				EVIDENCE NAMES
 				<%= select_tag :evidences, options_for_select(
-					@evidence.collect{|e| e.name}.uniq, params[:evidences]), 
+					@all_evidence.collect{|e| e.name}.uniq, params[:evidences]), 
 					{:multiple => true} %>
 				DATABASE
 				<%= select_tag :repository, options_for_select(
-					@evidence.collect{|e| e.repository}.uniq, params[:repository]), 
+					@all_evidence.collect{|e| e.repository}.uniq, params[:repository]), 
 					{:multiple => true} %>
 				LAB
 				<%= select_tag :labs, options_for_select(
-					@evidence.collect{|e| e.lab}.uniq, params[:labs]), 
+					@all_evidence.collect{|e| e.lab}.uniq, params[:labs]), 
 					{:multiple => true} %>
 				<%= submit_tag("Search") %>
 			<% end %>

@@ -83,15 +83,12 @@ end
   def show
     #protein AC is given from the table. This will find it
     @protein = Protein.find_by_ac(params[:id])
-    p @protein.ac
     
-    # GET all evidences for this protein
-    @evidence = Evidence.all
     
-    # params[:ppi].present? ? @ppi = params[:ppi] : @ppi = false
-    params[:phys_rel] = ["direct"]
-    #filter:
-    
+    # EVIDENCES FOR WHAT'S DISPLAYED
+    #
+    #
+    @evidence = Evidence.all    
     @evidence = @evidence.where(directness: params[:directness]) if params[:directness].present?
     @evidence = @evidence.where(phys_relevance: params[:phys_rel]) if params[:phys_rel].present?
     @evidence = @evidence.joins(:evidencecodes).where(evidencecodes: { name: params[:evidencecodes]}) if params[:evidencecodes].present?    
@@ -101,16 +98,29 @@ end
     @evidence = @evidence.where(proteaseassignment_confidence: params[:proteaseassignmentconfidences]) if params[:proteaseassignmentconfidences].present?
     @evidence = @evidence.where(name: params[:evidences]) if params[:evidences].present?                    
     @evidence = @evidence.where(repository: params[:repository]) if params[:repository].present?
-    @evidence = @evidence.where(lab: params[:labs]) if params[:labs].present?                    
+    @evidence = @evidence.where(lab: params[:labs]) if params[:labs].present?                  
+    
+    @evidence = @evidence.includes(:evidencecodes, :evidencesource) # these are the ones for display
     
     @evidence = @evidence.joins(:nterms).where(nterms: { protein_id: @protein.id}) | 
-    Evidence.joins(:cterms).where(cterms: { protein_id: @protein.id}) | 
-    Evidence.joins(:cleavages).where("cleavages.protease_id =? OR cleavages.substrate_id =?", @protein.id, @protein.id)
+    @evidence.joins(:cterms).where(cterms: { protein_id: @protein.id}) | 
+    @evidence.joins(:cleavages).where("cleavages.protease_id =? OR cleavages.substrate_id =?", @protein.id, @protein.id)
     
-=begin
-    @evidence = @evidence.where(method_protease_source: params[:methodproteasesources]) if params[:methodproteasesources].present?     
-=end
     
+    
+    # THESE ARE THE EVIDENCES JUST FOR THE FILTER!
+    #
+    #
+    @all_evidence = Evidence.joins(:nterms).where(nterms: { protein_id: @protein.id}).includes(:evidencecodes) | 
+    Evidence.joins(:cterms).where(cterms: { protein_id: @protein.id}).includes(:evidencecodes) | 
+    Evidence.joins(:cleavages).where("cleavages.protease_id =? OR cleavages.substrate_id =?", @protein.id, @protein.id).includes(:evidencecodes)
+    
+    # @nterms = @evidence.nterms
+    # @cterms = @evidence.cterms
+    # @cleavages = @evidence.cleavages
+    
+    
+    # THE DATA TO DISPLAY
 =begin
     @annotations_main = @protein.ccs.main
     @annotations_additional = @protein.ccs.additional
