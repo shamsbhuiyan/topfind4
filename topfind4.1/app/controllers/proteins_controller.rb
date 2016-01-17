@@ -28,7 +28,7 @@ class ProteinsController < ApplicationController
       #if there is one protein that matches directly to the ac,
       #go directly to that protein
       if @protein.present?
-        redirect_to :action => "show", :id => @protein.id
+        redirect_to :action => "show", :id => @protein.ac
       end 
       
     end
@@ -84,36 +84,60 @@ end
     #protein AC is given from the table. This will find it
     @protein = Protein.find_by_ac(params[:id])
     
+    p params
     
     # EVIDENCES FOR WHAT'S DISPLAYED
     #
     #
-    @evidence = Evidence.all    
+    p ""
+    p "-----------FILTERED EVIDENCES-----------"
+    p ""
+    @evidence = Evidence.all
     @evidence = @evidence.where(directness: params[:directness]) if params[:directness].present?
     @evidence = @evidence.where(phys_relevance: params[:phys_rel]) if params[:phys_rel].present?
-    @evidence = @evidence.joins(:evidencecodes).where(evidencecodes: { name: params[:evidencecodes]}) if params[:evidencecodes].present?    
+    @evidence = @evidence.joins(:evidencecodes).where(evidencecodes: { name: params[:evidencecodes]}) if params[:evidencecodes].present?
     @evidence = @evidence.where(methodology: params[:methodology]) if params[:methodology].present?
     @evidence = @evidence.where(method_perturbation: params[:perturbations]) if params[:perturbations].present?
     @evidence = @evidence.where(method_system: params[:methodsystems]) if params[:methodsystems].present?
     @evidence = @evidence.where(proteaseassignment_confidence: params[:proteaseassignmentconfidences]) if params[:proteaseassignmentconfidences].present?
-    @evidence = @evidence.where(name: params[:evidences]) if params[:evidences].present?                    
+    @evidence = @evidence.where(name: params[:evidences]) if params[:evidences].present?
     @evidence = @evidence.where(repository: params[:repository]) if params[:repository].present?
-    @evidence = @evidence.where(lab: params[:labs]) if params[:labs].present?                  
-    
-    @evidence = @evidence.includes(:evidencecodes, :evidencesource) # these are the ones for display
-    
-    @evidence = @evidence.joins(:nterms).where(nterms: { protein_id: @protein.id}) | 
-    @evidence.joins(:cterms).where(cterms: { protein_id: @protein.id}) | 
+    @evidence = @evidence.where(lab: params[:labs]) if params[:labs].present?
+
+    @evidence = @evidence
+
+    @evidence = @evidence.joins(:nterms).where(nterms: { protein_id: @protein.id}) |
+    @evidence.joins(:cterms).where(cterms: { protein_id: @protein.id}) |
     @evidence.joins(:cleavages).where("cleavages.protease_id =? OR cleavages.substrate_id =?", @protein.id, @protein.id)
+
+    @nterms = Nterm.where(protein_id: @protein.id).includes(
+      terminusmodification: [:kw],
+      evidences: [:evidencesource, :evidencecodes, :publications]).where(evidences: {id: @evidence.collect{|e| e.id}})
     
-    
-    
+    @cterms = Cterm.where(protein_id: @protein.id).includes(
+      terminusmodification: [:kw],
+      evidences: [:evidencesource, :evidencecodes, :publications]).where(evidences: {id: @evidence.collect{|e| e.id}})  
+
+    @substrates = Cleavage.where(protease_id: @protein.id).includes(
+      :substrate,
+      evidences: [:evidencesource, :evidencecodes, :publications]).where(evidences: {id: @evidence.collect{|e| e.id}})
+
+    @cleavages = Cleavage.where(substrate_id: @protein.id).includes(
+      :protease,
+      evidences: [:evidencesource, :evidencecodes, :publications]).where(evidences: {id: @evidence.collect{|e| e.id}})    
+
+
+        
     # THESE ARE THE EVIDENCES JUST FOR THE FILTER!
     #
     #
-    @all_evidence = Evidence.joins(:nterms).where(nterms: { protein_id: @protein.id}).includes(:evidencecodes) | 
-    Evidence.joins(:cterms).where(cterms: { protein_id: @protein.id}).includes(:evidencecodes) | 
-    Evidence.joins(:cleavages).where("cleavages.protease_id =? OR cleavages.substrate_id =?", @protein.id, @protein.id).includes(:evidencecodes)
+    p ""
+    p "-----------EVIDENCE ALL LOAD-----------"
+    p ""
+    @all_evidence = Evidence.all.includes(:evidencesource, :evidencecodes)
+    @all_evidence = @all_evidence.joins(:nterms).where(nterms: { protein_id: @protein.id}).includes(:evidencecodes) | 
+    @all_evidence.joins(:cterms).where(cterms: { protein_id: @protein.id}).includes(:evidencecodes) | 
+    @all_evidence.joins(:cleavages).where("cleavages.protease_id =? OR cleavages.substrate_id =?", @protein.id, @protein.id).includes(:evidencecodes)
     
     # @nterms = @evidence.nterms
     # @cterms = @evidence.cterms
@@ -157,6 +181,10 @@ end
     @ppi)
     @network = analysis.graph
 =end
+    p ""
+    p "-----------DONE-----------"
+    p ""
+    
   end
   
   

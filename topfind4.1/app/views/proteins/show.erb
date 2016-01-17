@@ -7,7 +7,9 @@
     </div>   
     <div class="box-content"> 
 			<%= form_tag(:controller => 'proteins', :action => 'show', id: @protein.ac) do %>
-				FILTERS:
+				<%= "Currently have #{@nterms.length} N-termini, #{@cterms.length} C-termini, #{@cleavages.length} Cleavages, and #{@substrates.length} Substrates"%>
+				</p>
+				FILTERS: (<%= link_to "REFRESH", {:action => 'show', :id => @protein.ac} %>)
 				<br></br>
 				DIRECTNESS
 				<%= select_tag :directness, options_for_select(
@@ -129,7 +131,7 @@
 					<th>Publications (PMID)</th>
 				</thead>
 				<tbody>
-					<% @protein.nterms.sort{|x, y| x.pos <=> y.pos}.each do |c| %>
+					<% @nterms.sort{|x, y| x.pos <=> y.pos}.each do |c| %>
 					<% c.terminusmodification.kw.name == 'unknown' ? mod = '' : mod = "#{c.terminusmodification.kw.name.downcase}-"%> 
 				    <% sequ = "<sup>#{mod}#{c.pos}</sup>#{@protein.sequence[c.pos-1,1]}#{@protein.sequence[c.pos..c.pos+4]}..."%>
 						<% c.evidences.each do |e| %>							
@@ -152,7 +154,9 @@
 				</tbody>
 			  </table>
             </section>
-			
+
+
+
 <!-- C-TERMINI  -->
 	        <section class="full category">
               <pagenav/>
@@ -169,7 +173,7 @@
 					<th>Publications (PMIDs)</th>
 				</thead>
 				<tbody>
-					<% @protein.cterms.sort{|x, y| x.pos <=> y.pos}.each do |c| %>
+					<% @cterms.sort{|x, y| x.pos <=> y.pos}.each do |c| %>
 					<% c.terminusmodification.kw.name == 'unknown' ? mod = '' : mod = "#{c.terminusmodification.kw.name.downcase}-"%> 
 				    <% sequ = "...#{@protein.sequence[c.pos-5..c.pos]}<sup>#{mod}#{c.pos}</sup>"%>
 						<% c.evidences.each do |e| %>
@@ -193,13 +197,13 @@
 			  </table>
             </section>
 
-<!-- SUBSTRATES -->
+<!-- CLEAVAGES -->
 	        <section class="full category">
               <pagenav/>
-              <a name="features"/><h2>Substrates</h2>
+              <a name="features"/><h2>Cleavages</h2>
 			  <table>
 				<thead>
-					<th>Substrate</th>
+					<th>Protease</th>
 					<th>Position</th>
 					<th>Sequence</th>
 					<th>Evidence type</th>
@@ -210,11 +214,11 @@
 					<th>Publications (PMIDs)</th>
 				</thead>
 				<tbody>
-					<% @protein.cleavages.sort{|x, y| x.pos <=> y.pos}.each do |c| %>
-				    <% sequ = "#{c.substrate.sequence[c.pos-3..c.pos]}.|.#{c.substrate.sequence[c.pos..c.pos+3]}"%>
+					<% @cleavages.sort{|x, y| x.pos <=> y.pos}.each do |c| %>
+				    <% sequ = "#{@protein.sequence[c.pos-3..c.pos]}.|.#{@protein.sequence[c.pos..c.pos+3]}"%>
 						<% c.evidences.each do |e| %>
 							<tr>
-							<td><%= link_to c.substrate.recname, {:action => 'show', :id => c.substrate.ac} %></td>
+							<td><%= link_to c.protease.name, {:action => 'show', :id => c.protease.ac} %></td>
 							<td><%= c.pos%></td>
 							<td><%= sequ %></td>
 							<td><%= e.evidencecodes.collect{|x| x.name}.join(", ") %></td>
@@ -232,7 +236,49 @@
 					<% end %>
 				</tbody>
 			  </table>
-            </section>
+            </section>	
+
+<!-- SUBSTRATES -->
+	        <section class="full category">
+              <pagenav/>
+              <a name="features"/><h2>Substrates</h2>
+			  <table>
+				<thead>
+					<th>Substrate</th>
+					<th>Position</th>
+					<th>Sequence</th>
+					<th>Evidence type</th>
+					<th>Method</th>
+					<th>Source (database)</th>
+					<th>Source (Lab)</th>
+					<th>Evidence name</th>
+					<th>Publications (PMIDs)</th>
+				</thead>
+				<tbody>
+					<% @substrates.sort{|x, y| x.pos <=> y.pos}.each do |c| %>
+				    <% sequ = "#{c.substrate.sequence[c.pos-3..c.pos]}.|.#{c.substrate.sequence[c.pos..c.pos+3]}"%>
+						<% c.evidences.each do |e| %>
+							<tr>
+							<td><%= link_to c.substrate.name, {:action => 'show', :id => c.substrate.ac} %></td>
+							<td><%= c.pos%></td>
+							<td><%= sequ %></td>
+							<td><%= e.evidencecodes.collect{|x| x.name}.join(", ") %></td>
+							<td><%= e.methodology %></td>
+							<td><%= link_to e.evidencesource.dbname, e.evidencesource.dburl, :target => "_blank" if e.evidencesource %>
+							<td><%= e.lab %></td>
+							<td><%= link_to e.name, {:controller => 'evidences', :action => 'show', :id => e.id} %></td>
+							<td>
+								<% e.publications.each do |x| %>
+								<%= link_to x.pmid, "http://www.ncbi.nlm.nih.gov/pubmed/#{x.pmid}", :target => "_blank" %>,
+								<% end %>
+							</td>
+							</tr>
+						<% end %>
+					<% end %>
+				</tbody>
+			  </table>
+            </section>			
+
 			
 			
 			<section class="full">
@@ -240,6 +286,7 @@
             </section>
 	
 </def>
+
 
 <%= link_to 'Back', {:action => 'index'} %>
 

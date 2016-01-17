@@ -16,7 +16,10 @@
  <% @cterm.each do |c| %>
 
  <tr>
- <td> <%= c.modificationclass %></td><td><%= c.pos + 1 %><td><%= c.protein.sequence[c.pos..(c.pos + 4)] %></td><td><%= link_to c.protein.recname, {:controller=> 'proteins', :action => 'show', :id => c.protein_id} %></td>
+ <td> <%= c.modificationclass %></td>
+ <td><%= c.pos + 1 %></td>
+ <td><%= c.protein.sequence[c.pos..(c.pos + 4)] %></td>
+ <td><%= link_to c.protein.recname, {:controller=> 'proteins', :action => 'show', :id => c.protein.ac} %></td>
 
  </tr> 
  <% end %></tbody>
