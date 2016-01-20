@@ -182,6 +182,69 @@ end
     @network = analysis.graph
 =end
     p ""
+    p "-----------GRAPH NEIGHBORHOOD-----------"
+    p ""
+    
+    distance = 2
+    maxNodes = 50
+    @species = @protein.species
+
+    # GET EDGES FROM SQL
+    c_query = "SELECT p.id, s.id, c.pos from cleavages c, proteins p, proteins s WHERE p.id = c.protease_id AND s.id = c.substrate_id AND p.species_id = #{@species.id} AND s.species_id = #{@species.id};"
+    i_query = "SELECT i.id, p.id from inhibitions inh, proteins i, proteins p WHERE i.id = inh.inhibitor_id AND p.id = inh.inhibited_protease_id AND i.species_id = #{@species.id} AND p.species_id = #{@species.id};"
+    edges = []
+    ActiveRecord::Base.connection.execute(c_query).each{|x| edges << x}
+    ActiveRecord::Base.connection.execute(i_query).each{|x| edges << [x[0], x[1], 0]}
+
+    # PROTEINS TO BE DISPLAYED (ONLY PROTEASE WEB)
+    pwProteins = edges.collect{|x| x[0]}.uniq
+
+    # GET NEIGHBORS (by a number of steps "distance")
+    neighbors = []
+    neighbors[0] = [@protein.id]
+    (1..distance).to_a.each{|i|
+      neighbors[i] = neighbors[i-1].clone
+      edges.each{|x|
+        if neighbors[i-1].include?(x[0]) then
+          neighbors[i] << x[1] if pwProteins.include?(x[1])
+        elsif neighbors[i-1].include?(x[1]) then
+          neighbors[i] << x[0] if pwProteins.include?(x[0])
+        end
+      }
+      neighbors[i] = neighbors[i].uniq
+      if neighbors[i].length > maxNodes then
+        neighbors.delete_at(i)
+        break
+      end
+    }
+    finalNeighbors = neighbors[neighbors.length - 1]
+    
+    # MAP TO GENES
+    @gnames = {}
+    g_query = "select g.protein_id, g.name from gns g where g.protein_id in (#{finalNeighbors.join(',')}) ;"
+    g_result =  ActiveRecord::Base.connection.execute(g_query);
+    g_result.each{|x|
+      @gnames[x[0].to_i] = x[1]
+    }
+    @gnames.keys.select{|k, v| @gnames[k].nil?}.each{|k| @gnames[k] = k }
+
+    # PRINT GRAPHVIZ SVG
+    @graphviz_file_image_path = "protein_neighborhood/#{@protein.ac}_pw_graphviz"
+    @graphviz_file_full_path = "public/images/#{@graphviz_file_image_path}"
+    File.delete("#{@graphviz_file_full_path}.txt") if File.exist?("#{@graphviz_file_full_path}.txt")
+    File.delete("#{@graphviz_file_full_path}.svg") if File.exist?("#{@graphviz_file_full_path}.svg")
+    outputFile = File.open("#{@graphviz_file_full_path}.txt", "w")
+    outputFile << "digraph G {\n"
+    outputFile << "\"#{@gnames[@protein.id]}\" [style=filled fillcolor=turquoise];\n"
+    edges.select{|x| finalNeighbors.include?(x[0]) and finalNeighbors.include?(x[1]) and x[0] != x[1]}.collect{|x|
+      "\"#{@gnames[x[0]]}\" -> \"#{@gnames[x[1]]}\"\n"}.uniq.each{|x| outputFile << x}
+    outputFile << "}"
+    outputFile.close
+    @graphviz = nil
+    @graphviz = system "dot #{@graphviz_file_full_path}.txt -Gsize=15 -Tsvg -o #{@graphviz_file_full_path}.svg" if File.exist?("#{@graphviz_file_full_path}.txt")
+    
+    
+    p ""
     p "-----------DONE-----------"
     p ""
     
@@ -189,7 +252,7 @@ end
   
   
   
-  def pathfinder
+  def pathfinder  
   end
     
   def pathfinder_output

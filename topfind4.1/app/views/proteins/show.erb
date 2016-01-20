@@ -1,5 +1,6 @@
 <%= render 'header' %>
 
+
 <def tag="protein-filter">
   <div class="filter box">
     <div class="box-header">
@@ -107,6 +108,14 @@
 	    	<%= @protein.htmlsequence %>
 	  </section>
 	</section> 	  
+	
+<def tag='Protein_Neighborhood'>
+	<a name="Protein_Neighborhood"/>
+	<h2>Protein Neighborhood</h2>
+	<% if File.exist?("#{@graphviz_file_full_path}.svg") %>
+		<%= image_tag "#{@graphviz_file_image_path}.svg" %>
+	<% end %>	
+</def>
 	
 <section class="full category">
             </section>

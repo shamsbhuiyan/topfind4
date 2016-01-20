@@ -13,7 +13,7 @@ Things you may want to cover:
 
 ====== System dependencies
 * topfind needs R installed (uses rserve-client gem to talk to it)
-* topfind also needs graphviz installed (make sure it's in the PATH, i.e. "dot" is available from command line)
+* topfind also needs graphviz installed (make sure it's in the PATH, i.e. "dot" is available from command line) (this might have to change)
 
 ====== Configuration
 
@@ -31,16 +31,15 @@ Things you may want to cover:
 ====== Deployment instructions
 
 ====== TODO
-* INVERSE CLEAVAGES
+* protein pages --> DOMAINS AND FEATURES (graph is done but you need graphviz installed)
+* user handling
 * evidences/show/70099 --> fix views
-* this throws an error: "Evidence.find(70099).inhibitions"
+* why does this throw an error: "Evidence.find(70099).inhibitions"
 * EXPORT for n-terms, c-terms, and cleavages in ProteinPages
 * Evidence source (DB) in protein page n- and c-termini link back to the old topfind
 
 * link evidences back to their n- and c-termini? And cleavages and inhibitions?
 * CSV exports for protein list (index)
-* protein pages (show)
-* user handling
 * imports
 * general esthetics
 * ? symbols for TopFINDer and PathFINDer (and elsehwere?)
