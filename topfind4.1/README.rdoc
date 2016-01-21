@@ -31,11 +31,11 @@ Things you may want to cover:
 ====== Deployment instructions
 
 ====== TODO
-======== ESSENTIALS
+ESSENTIALS
 * protein pages --> DOMAINS AND FEATURES (graph is done but you need graphviz installed)
-- https://google-developers.appspot.com/chart/interactive/docs/gallery/timeline for the plots?
+- --> https://google-developers.appspot.com/chart/interactive/docs/gallery/timeline for the plots?
 * user handling
-- https://github.com/NoamB/sorcery/blob/master/README.md - looks good?
+- --> https://github.com/NoamB/sorcery/blob/master/README.md - looks good?
 
 * evidences/show/70099 --> fix views
 * why does this throw an error: "Evidence.find(70099).inhibitions"
@@ -43,7 +43,7 @@ Things you may want to cover:
 * general esthetics
 * ? symbols for TopFINDer and PathFINDer (and elsehwere?)
 
-======== EXTRAS
+EXTRAS
 * EXPORT for n-terms, c-terms, and cleavages in ProteinPages
 * CSV exports for protein list (index)
 * link evidences back to their n- and c-termini? And cleavages and inhibitions?
