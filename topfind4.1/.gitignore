@@ -16,6 +16,15 @@
 config/database.yml
 config/secrets.yml 
 
+
 # R files
 .Rhistory
 
+
+# TOPFINDER
+public/explorer/*
+
+# PATHFINDER
+
+# PROTEIN SHOW PAGES
+public/images/protein_neighborhood/*
