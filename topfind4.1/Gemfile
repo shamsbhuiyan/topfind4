@@ -42,6 +42,7 @@ gem 'will_paginate', '3.0.7'
 gem 'filterrific', '2.0.5'
 gem 'rubystats'
 gem 'rserve-client'
+gem "chartkick"
 
 
 group :development, :test do

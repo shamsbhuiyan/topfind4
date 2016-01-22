@@ -82,7 +82,7 @@ end
   
   def show
     #protein AC is given from the table. This will find it
-    @protein = Protein.find_by_ac(params[:id])
+    @protein = Protein.includes(:chains).find_by_ac(params[:id])
     
     p params
     
@@ -243,6 +243,18 @@ end
     @graphviz = nil
     @graphviz = system "dot #{@graphviz_file_full_path}.txt -Gsize=15 -Tsvg -o #{@graphviz_file_full_path}.svg" if File.exist?("#{@graphviz_file_full_path}.txt")
     
+    p ""
+    p "-----------DOMAINS, FEATURES-----------"
+    p ""
+    
+    @domainElements = []
+    @protein.chains.each{|c| @domainElements << ["Chains",  c.from, c.to]}
+    @nterms.each{|n| @domainElements << ["N-Terms", n.pos, n.pos+1]}
+    @cterms.each{|c| @domainElements << ["C-Terms", c.pos, c.pos+1]}
+    @cleavages.each{|c| @domainElements << ["Cleavages", c.pos, c.pos+1]}
+    @protein.fts.each{|f| @domainElements << ["Features", f.from.to_i, f.to.to_i+1]}
+    @protein.fts.each{|f| @domainElements << ["Features", f.from.to_i, f.to.to_i+1]}
+    p @domainElements
     
     p ""
     p "-----------DONE-----------"

@@ -6,5 +6,6 @@ class Inhibition2evidence < ActiveRecord::Base
     end
    end
   belongs_to :evidence
+  belongs_to :inhibition
   belongs_to :traceable, :polymorphic => true 
 end

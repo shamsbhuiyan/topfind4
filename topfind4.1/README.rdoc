@@ -32,13 +32,11 @@ Things you may want to cover:
 
 ====== TODO
 ESSENTIALS
-* protein pages --> DOMAINS AND FEATURES (graph is done but you need graphviz installed)
-- --> https://google-developers.appspot.com/chart/interactive/docs/gallery/timeline for the plots?
+* protein pages --> DOMAINS AND FEATURES plot 1) Axis to numbers (now is seconds or so, maybe remove it?) and 2) mouse-overevents to show and link to evidence?
 * user handling
 - --> https://github.com/NoamB/sorcery/blob/master/README.md - looks good?
 
-* evidences/show/70099 --> fix views
-* why does this throw an error: "Evidence.find(70099).inhibitions"
+* What's "belongs_to :traceable, :polymorphic => true" in inhibition2evidences ? Why isn't it in cleavage2evidences?
 * Evidence source (DB) in protein page n- and c-termini link back to the old topfind
 * general esthetics
 * ? symbols for TopFINDer and PathFINDer (and elsehwere?)

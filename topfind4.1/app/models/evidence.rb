@@ -56,7 +56,7 @@ class Evidence < ActiveRecord::Base
   
   has_many :cleavage2evidences
   has_many :cleavages, :through => :cleavage2evidences
-  has_many :inbibition2evidences
+  has_many :inhibition2evidences
   has_many :inhibitions, :through => :inhibition2evidences
   has_many :cterm2evidences
   has_many :cterms, :through => :cterm2evidences
