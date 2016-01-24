@@ -82,9 +82,13 @@ end
   
   def show
     #protein AC is given from the table. This will find it
-    @protein = Protein.includes(:chains).find_by_ac(params[:id])
+    @protein = Protein.includes(:chains, :fts).find_by_ac(params[:id])
     
     p params
+    
+    if @protein.nil?
+      redirect_to :action => "index"
+    end 
     
     # EVIDENCES FOR WHAT'S DISPLAYED
     #
@@ -125,62 +129,19 @@ end
     @cleavages = Cleavage.where(substrate_id: @protein.id).includes(
       :protease,
       evidences: [:evidencesource, :evidencecodes, :publications]).where(evidences: {id: @evidence.collect{|e| e.id}})    
-
-
         
     # THESE ARE THE EVIDENCES JUST FOR THE FILTER!
     #
     #
     p ""
-    p "-----------EVIDENCE ALL LOAD-----------"
+    p "-----------EVIDENCE ALL LOAD (For filters)-----------"
     p ""
     @all_evidence = Evidence.all.includes(:evidencesource, :evidencecodes)
     @all_evidence = @all_evidence.joins(:nterms).where(nterms: { protein_id: @protein.id}).includes(:evidencecodes) | 
     @all_evidence.joins(:cterms).where(cterms: { protein_id: @protein.id}).includes(:evidencecodes) | 
     @all_evidence.joins(:cleavages).where("cleavages.protease_id =? OR cleavages.substrate_id =?", @protein.id, @protein.id).includes(:evidencecodes)
     
-    # @nterms = @evidence.nterms
-    # @cterms = @evidence.cterms
-    # @cleavages = @evidence.cleavages
     
-    
-    # THE DATA TO DISPLAY
-=begin
-    @annotations_main = @protein.ccs.main
-    @annotations_additional = @protein.ccs.additional
-    @documentations = Documentation.all.group_by(&:name)
-    @ppi = false
-
-    #For the neighborhoodd stuff
-    @cleavages = @protein.cleavages
-    @cleavages = @cleavages.map {|x| x if x.substrate_id}.compact
-    
-    @cleavagesites = @protein.cleavages.collect{|t| t.cleavagesite} 
-    @cleavagesites.delete(nil)
-    
-    @inverse_cleavages = @protein.inverse_cleavages
-      
-    @inhibitions = @protein.inhibitions
-
-    @inverse_inhibitions = @protein.inverse_inhibitions
-      
-    @cterms = @protein.cterms
-      
-    @nterms = @protein.nterms
-    
-    analysis = Analysis.new(@protein,
-    @cleavages,
-    @cleavagesites,
-    @inverse_cleavages,
-    @inhibitions,
-    @inverse_inhibitions,
-    @cterms,
-    @nterms,
-    false,
-    [],
-    @ppi)
-    @network = analysis.graph
-=end
     p ""
     p "-----------GRAPH NEIGHBORHOOD-----------"
     p ""
@@ -247,14 +208,24 @@ end
     p "-----------DOMAINS, FEATURES-----------"
     p ""
     
-    @domainElements = []
-    @protein.chains.each{|c| @domainElements << ["Chains",  c.from, c.to]}
-    @nterms.each{|n| @domainElements << ["N-Terms", n.pos, n.pos+1]}
-    @cterms.each{|c| @domainElements << ["C-Terms", c.pos, c.pos+1]}
-    @cleavages.each{|c| @domainElements << ["Cleavages", c.pos, c.pos+1]}
-    @protein.fts.each{|f| @domainElements << ["Features", f.from.to_i, f.to.to_i+1]}
-    @protein.fts.each{|f| @domainElements << ["Features", f.from.to_i, f.to.to_i+1]}
-    p @domainElements
+    @domainElements = [["Sequence", "1-#{@protein.aalen}", 0, @protein.aalen]]
+    @protein.chains.each{|c| @domainElements << ["Chains", "#{c.from}-#{c.to}", c.from, c.to]}
+    @nterms.each{|n| @domainElements << ["N-Terms", "#{n.pos}", n.pos, n.pos+1]}
+    @cterms.each{|c| @domainElements << ["C-Terms", "#{c.pos}", c.pos-1, c.pos]}
+    @cleavages.each{|c| @domainElements << ["Cleavages", "#{c.pos}", c.pos-1, c.pos]}
+    @protein.fts.each{|f| 
+      if ['COILED','CROSSLNK','HELIX','INTRAMEM','REPEAT','STRAND','TOPO_DOM','TRANSMEM','TURN'].include?(f.name) then
+        @domainElements << ['Topology', "#{f.name} (#{f.from}-#{f.to})", f.from.to_i, f.to.to_i]
+      elsif ['LIPID','MOD_RES','NON_STD'].include?(f.name) then
+        @domainElements << ['Modifications', "#{f.name} (#{f.from}-#{f.to})", f.from.to_i, f.to.to_i]
+      elsif ['DOMAIN','MOTIF','PEPTIDE','PROPEP','REGION','SIGNAL','INIT_MET','SITE','TRANSIT'] .include?(f.name) then
+        @domainElements << ['Domains',"#{f.name} (#{f.from}-#{f.to})", f.from.to_i, f.to.to_i]
+      elsif ['ACT_SITE','DNA_BIND','BINDING','CA_BIND','NP_BIND','METAL','ZN_FING'] .include?(f.name) then
+        @domainElements << ['Features', "#{f.name} (#{f.from}-#{f.to})", f.from.to_i, f.to.to_i]
+      elsif ['CONFLICT','MUTAGEN','NON_CONS','VARIANT','UNSURE','VAR_SEQ'].include?(f.name) then
+        @domainElements << ['Variants', "#{f.name} (#{f.from}-#{f.to})", f.from.to_i, f.to.to_i]
+      end
+    }
     
     p ""
     p "-----------DONE-----------"

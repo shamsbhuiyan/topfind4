@@ -1,8 +1,48 @@
 <%= render 'header' %>
 
+<!-- RUBY DOESN'T DISPLAY TOOLTIPS, if I put he same code in a .html file tooltips are displayed -->
+<!-- If the values are integers, one has to start from 0 -->
+
+	
+<!-- PARSE RUBY DATA FOR JAVASCRIPT -->
+<%= javascript_tag do %>
+  var hello1 = "<%= @domainElements.to_json %>".replace(/\&quot\;/g, '"' );
+  var domainData = JSON.parse(hello1)
+  console.log(domainData)
+<% end %>
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+  google.charts.load('current', {'packages':['timeline']});
+  google.charts.setOnLoadCallback(drawChart);
+
+  function drawChart() {
+    var container = document.getElementById('domains-timeline');
+    var chart = new google.visualization.Timeline(container);
+    var dataTable = new google.visualization.DataTable();
+  	console.log(domainData)
+	
+    dataTable.addColumn({ type: 'string', id: 'President' });
+    dataTable.addColumn({ type: 'string', id: 'Bar label' });
+    // dataTable.addColumn({ type: 'string', role: 'tooltip' });
+    dataTable.addColumn({ type: 'number', id: 'Start' });
+    dataTable.addColumn({ type: 'number', id: 'End' });
+    dataTable.addRows(domainData);
+	
+	var options = {
+      timeline: { colorByRowLabel: true }
+    };
+    chart.draw(dataTable, options);
+  }
+</script>
+
+<div id="domains-timeline" style="width:1400px; height:700px"></div>
+
+
 <!--THIS IS CHART KICK - AWESOMENESS -->
-<%= javascript_include_tag "//www.google.com/jsapi", "chartkick" %>
-<%= timeline @domainElements %>
+<!-- <%= javascript_include_tag "//www.google.com/jsapi", "chartkick" %> -->
+<!-- <%= timeline @domainElements, library: {backgroundColor: "#eee", height: 500, avoidOverlappingGridLines: FALSE, timeline: { showRowLabels: FALSE }} %> -->
+<!-- <%= timeline @domainElements, library: {height: 400, width: 800} %> -->
 
 <def tag="protein-filter">
   <div class="filter box">
