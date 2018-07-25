@@ -18,6 +18,7 @@ TopFIND is the Termini oriented protein Function Inferred Database (TopFIND) is 
     rvm use 2.2.3
 
 *  Navigate to the topfind4.1 directory and install the proper gems using <tt>bundle install</tt>
+*  Generate documentation using <tt>rake doc:app</tt>
 
 ====== Database creation + initialization
 * Download the compressed mysql dump from clipserve.clip.ubc.ca/topfind/download
