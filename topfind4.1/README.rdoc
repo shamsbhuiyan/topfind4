@@ -1,27 +1,29 @@
-= README
+= TopFIND 4.1
+TopFIND is the Termini oriented protein Function Inferred Database (TopFIND) is an integrated knowledgebase focused on protein termini, their formation by proteases and functional implications. It contains information about the processing and the processing state of proteins and functional implications thereof derived from research literature, contributions by the scientific community and biological databases.
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
 
-Things you may want to cover:
+=== PREREQUISITES:
+* In order to install the compatible mysql2 gem, ensure that MySQL 5.7 is installed or there will be issues
+* Topfind requires R to be installed, as it uses the rserve-client gem to talk to it
+* Topfind also requires graphviz to be installed. Ensure that it is in the PATH (i.e. "dot" is available from command line)
 
 === INSTALLATION:
 
-======  Ruby version 
-* 2.2.3
-* to add the right gems, just run bundle install (or update?)
+======  Installing Ruby
+* Install RVM to handle different versions of Ruby on your machine (https://rvm.io/)
+* Install Ruby version 2.2.3 and set it as the version in use
 
-====== System dependencies
-* topfind needs R installed (uses rserve-client gem to talk to it)
-* topfind also needs graphviz installed (make sure it's in the PATH, i.e. "dot" is available from command line) (this might have to change)
+    rvm install 2.2.3
 
-====== Configuration
+    rvm use 2.2.3
 
-====== Database creation
-* download the mysql dump from clipserve.ubc.ca/topfind
+*  Navigate to the topfind4.1 directory and install the proper gems using <tt>bundle install</tt>
 
-====== Database initialization
-* modify the config/database.yml file
+====== Database creation + initialization
+* Download the compressed mysql dump from clipserve.clip.ubc.ca/topfind/download
+* Modify the config/database.yml file to fit your own parameters, as shown in the example file
+* Create the required databases using
+    rake db:create
 
 ====== How to run the test suite
 * SHAMS * how does this work? do you need an empty db to start with?
