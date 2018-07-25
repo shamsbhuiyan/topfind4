@@ -24,6 +24,18 @@ TopFIND is the Termini oriented protein Function Inferred Database (TopFIND) is 
 * Modify the config/database.yml file to fit your own parameters, as shown in the example file
 * Create the required databases using
     rake db:create
+* Using the following series of commands, fill the databases with the downloaded dump file
+    mysql -u root -p
+    use topfind_development_4_1
+    source DUMPFILEPATH.sql
+    use topfind_development_4_1_test
+    source DUMPFILEPATH.sql
+    quit;
+    
+====== Running the application
+    
+* While within the topfind4.1 directory, start the application using <tt>rails server</tt>
+* Navigate to http://localhost:3000/home/index to see the application
 
 ====== How to run the test suite
 * SHAMS * how does this work? do you need an empty db to start with?
